@@ -6,7 +6,7 @@ export default function Login() {
     <div className="login-page">
       {/* Encabezado con mapache y título */}
       <div className="header">
-        <h1>Bienvenido a<br />Suki</h1>
+        <h1>Bienvenido a<br />SSuki</h1>
         <div className="blob-container">
         
         <svg xmlns="http://www.w3.org/2000/svg" width="626" height="720" viewBox="0 0 626 720" fill="none">
