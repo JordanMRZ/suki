@@ -1,0 +1,359 @@
+/* Estilos generales */
+/* 🦝 Fredoka One */
+@font-face {
+  font-family: 'Fredoka One';
+  src: url('../src/assets/fonts/FredokaOne-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Fredoka';
+  src: url('../src/assets/fonts/Fredoka-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Fredoka';
+  src: url('../src/assets/fonts/Fredoka-Bold.ttf') format('truetype');
+  font-weight: 700;
+}
+
+/* ✳️ Mulish (varios pesos) */
+@font-face {
+  font-family: 'Mulish';
+  src: url('../src/assets/fonts/Mulish-ExtraLight.ttf') format('truetype');
+  font-weight: 200;
+}
+
+@font-face {
+  font-family: 'Mulish';
+  src: url('../src/assets/fonts/Mulish-Light.ttf') format('truetype');
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: 'Mulish';
+  src: url('../src/assets/fonts/Mulish-Regular.ttf') format('truetype');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'Mulish';
+  src: url('../src/assets/fonts/Mulish-Medium.ttf') format('truetype');
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: 'Mulish';
+  src: url('../src/assets/fonts/Mulish-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: 'Mulish';
+  src: url('../src/assets/fonts/Mulish-Bold.ttf') format('truetype');
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: 'Mulish';
+  src: url('../src/assets/fonts/Mulish-Black.ttf') format('truetype');
+  font-weight: 900;
+}
+
+/* 💠 Quicksand */
+@font-face {
+  font-family: 'Quicksand';
+  src: url('../src/assets/fonts/Quicksand-Light.ttf') format('truetype');
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: 'Quicksand';
+  src: url('../src/assets/fonts/Quicksand-Regular.ttf') format('truetype');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'Quicksand';
+  src: url('../src/assets/fonts/Quicksand-Medium.ttf') format('truetype');
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: 'Quicksand';
+  src: url('../src/assets/fonts/Quicksand-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: 'Quicksand';
+  src: url('../src/assets/fonts/Quicksand-Bold.ttf') format('truetype');
+  font-weight: 700;
+}
+html, body {
+  margin: 0;
+  background-color: #F5FFF2;
+  overflow-x: hidden;
+}
+html, body {
+  overflow-x: hidden;
+}
+.App {
+  text-align: center;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  
+}
+
+/* Barra de navegación */
+.navbar {
+  background-color: #a8d5a8;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+  font-size: 28px;
+  font-weight: bold;
+  color: #2d7a2d;
+ 
+}
+
+.login-button {
+  background-color: #6fa86f;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.login-button:hover {
+  background-color: #5a955a;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Contenido principal */
+.main-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.welcome-title {
+  font-size: 48px;
+  color: #2d7a2d;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  animation: bounce 2s infinite;
+}
+
+.welcome-message {
+  font-size: 24px;
+  color: #4a934a;
+  margin-bottom: 40px;
+  max-width: 800px;
+}
+
+/* Animaciones */
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes wiggle {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(5deg);
+  }
+  75% {
+    transform: rotate(-5deg);
+  }
+}
+
+/* Elementos decorativos */
+.decorative-elements {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.star {
+  position: absolute;
+  background-color: #ffeb3b;
+  clip-path: polygon(
+    50% 0%,
+    61% 35%,
+    98% 35%,
+    68% 57%,
+    79% 91%,
+    50% 70%,
+    21% 91%,
+    32% 57%,
+    2% 35%,
+    39% 35%
+  );
+  animation: twinkle 3s infinite;
+}
+
+@keyframes twinkle {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+/* Sección de información */
+.info-section {
+  background-color: rgba(168, 213, 168, 0.5);
+  border-radius: 20px;
+  padding: 30px;
+  margin: 20px;
+  max-width: 800px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.info-title {
+  font-size: 32px;
+  color: #2d7a2d;
+  margin-bottom: 15px;
+}
+
+.info-text {
+  font-size: 20px;
+  color: #4a934a;
+  line-height: 1.5;
+}
+
+/* Animal */
+.animal-container {
+  margin: 30px 0;
+  position: relative;
+}
+
+.animal {
+  width: 200px;
+  height: 200px;
+  background-color: #8bc34a;
+  border-radius: 50%;
+  position: relative;
+  animation: float 3s ease-in-out infinite;
+  margin: 0 auto;
+}
+
+.animal::before {
+  content: "";
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  background-color: #2d7a2d;
+  border-radius: 50%;
+  top: 60px;
+  left: 50px;
+}
+
+.animal::after {
+  content: "";
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  background-color: #2d7a2d;
+  border-radius: 50%;
+  top: 60px;
+  right: 50px;
+}
+
+.animal-mouth {
+  position: absolute;
+  width: 80px;
+  height: 40px;
+  background-color: #2d7a2d;
+  border-radius: 0 0 40px 40px;
+  bottom: 50px;
+  left: 60px;
+}
+
+.animal-ear {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-left: 30px solid transparent;
+  border-right: 30px solid transparent;
+  border-bottom: 60px solid #8bc34a;
+}
+
+.animal-ear.left {
+  top: -30px;
+  left: 30px;
+  transform: rotate(-20deg);
+}
+
+.animal-ear.right {
+  top: -30px;
+  right: 30px;
+  transform: rotate(20deg);
+}
+
+/* Botones interactivos */
+.interactive-button {
+  background-color: #8bc34a;
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 30px;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  margin: 10px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.interactive-button:hover {
+  background-color: #7cb342;
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Footer */
+.footer {
+  background-color: #a8d5a8;
+  padding: 20px;
+  text-align: center;
+  color: #2d7a2d;
+  font-size: 16px;
+}
