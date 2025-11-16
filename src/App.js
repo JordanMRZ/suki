@@ -13,6 +13,7 @@ import ProfilePage from './pages/ProfilePage';
 import LandingPage from './pages/LandingPage';
 import LoginPage from './pages/LoginPage';
 import MainPage from './pages/MainPage';
+import AccesibilityPage from './pages/AccesibilityPage';
 import './App.css';
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
               <Route path="/login" element={<LoginPage />} />
               <Route path="/register-two" element={<Register2Page />} />
               <Route path="/main" element={<MainPage />} />
+                <Route path="/Accessibility" element={<AccesibilityPage />} />
               {/* Rutas adicionales se agregarán más adelante */}
             </Routes>
           </div>
