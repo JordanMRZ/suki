@@ -5,12 +5,14 @@ import { UserProvider } from './context/UserContext';
 import HomePage from './pages/HomePage';
 import EntrarPage from './pages/EntrarPage';
 import RegisterPage from './pages/RegisterPage';
+import Register2Page from './pages/Register2Page';
 import InteractiveMap from './pages/InteractiveMap';
 import SettingsPage from './pages/SettingsPage';
 import SubjectPage from './pages/SubjectPage';
 import ProfilePage from './pages/ProfilePage';
 import LandingPage from './pages/LandingPage';
 import LoginPage from './pages/LoginPage';
+import MainPage from './pages/MainPage';
 import './App.css';
 
 function App() {
@@ -29,6 +31,8 @@ function App() {
               <Route path="/subject/:subjectId" element={<SubjectPage />} />
               <Route path="/landing" element={<LandingPage />} />
               <Route path="/login" element={<LoginPage />} />
+              <Route path="/register-two" element={<Register2Page />} />
+              <Route path="/main" element={<MainPage />} />
               {/* Rutas adicionales se agregarán más adelante */}
             </Routes>
           </div>
