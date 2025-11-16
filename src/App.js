@@ -11,6 +11,7 @@ import SubjectPage from './pages/SubjectPage';
 import ProfilePage from './pages/ProfilePage';
 import LandingPage from './pages/LandingPage';
 import LoginPage from './pages/LoginPage';
+import AccesibilityPage from './pages/AccesibilityPage';
 import './App.css';
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
               <Route path="/subject/:subjectId" element={<SubjectPage />} />
               <Route path="/landing" element={<LandingPage />} />
               <Route path="/login" element={<LoginPage />} />
+              <Route path="/Accessibility" element={<AccesibilityPage />} />
               {/* Rutas adicionales se agregarán más adelante */}
             </Routes>
           </div>
