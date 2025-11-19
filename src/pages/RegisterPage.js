@@ -1,602 +1,244 @@
-import React, { useState, useEffect } from 'react';
-import { useAccessibility } from '../context/AccessibilityContext';
-import { useUser } from '../context/UserContext';
-import { useNavigate } from 'react-router-dom';
-import RaccoonMascot from '../components/RaccoonMascot';
+import React from "react";
+import raccoon from "../assets/suki-login.png"; // Cambia este nombre por el tuyo (png o svg)
 
-const RegisterPage = () => {
-  const { speakText, fontSize, highContrast, theme } = useAccessibility();
-  const { register } = useUser();
-  const navigate = useNavigate();
-  
-  // Estados del formulario
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [age, setAge] = useState('');
-  const [accessibilitySettings, setAccessibilitySettings] = useState({
-    fontSize: 'medium',
-    highContrast: false,
-    theme: 'pastel',
-    textToSpeech: true
-  });
-  
-  // Estados para errores y validación
-  const [errors, setErrors] = useState({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  // Mensajes de accesibilidad
-  const registerMessage = "Crea tu cuenta en Suki para comenzar a aprender y divertirte.";
-  const usernameMessage = "Nombre de usuario";
-  const passwordMessage = "Contraseña";
-  const confirmPasswordMessage = "Confirmar contraseña";
-  const ageMessage = "Edad";
-  const submitMessage = "Registrarse";
-  const backMessage = "Volver";
-
-  useEffect(() => {
-    // Leer el mensaje de registro al cargar la página
-    speakText(registerMessage);
-  }, [speakText, registerMessage]);
-
-  // Validar el formulario
-  const validateForm = () => {
-    const newErrors = {};
-    
-    if (!username.trim()) {
-      newErrors.username = "El nombre de usuario es requerido";
-      speakText("El nombre de usuario es requerido");
-    } else if (username.length < 3) {
-      newErrors.username = "El nombre de usuario debe tener al menos 3 caracteres";
-      speakText("El nombre de usuario debe tener al menos 3 caracteres");
-    }
-    
-    if (!password) {
-      newErrors.password = "La contraseña es requerida";
-      speakText("La contraseña es requerida");
-    } else if (password.length < 6) {
-      newErrors.password = "La contraseña debe tener al menos 6 caracteres";
-      speakText("La contraseña debe tener al menos 6 caracteres");
-    }
-    
-    if (password !== confirmPassword) {
-      newErrors.confirmPassword = "Las contraseñas no coinciden";
-      speakText("Las contraseñas no coinciden");
-    }
-    
-    if (!age) {
-      newErrors.age = "La edad es requerida";
-      speakText("La edad es requerida");
-    } else if (age < 1 || age > 5) {
-      newErrors.age = "La edad debe estar entre 1 y 5 años";
-      speakText("La edad debe estar entre 1 y 5 años");
-    }
-    
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  // Manejar el envío del formulario
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    
-    if (validateForm()) {
-      setIsSubmitting(true);
-      speakText("Registrando cuenta...");
-      
-      // Simular un retraso para el registro
-      setTimeout(() => {
-        const userData = {
-          username,
-          age: parseInt(age),
-          accessibilitySettings
-        };
-        
-        register(userData);
-        speakText("¡Registro exitoso! Bienvenido a Suki.");
-        setIsSubmitting(false);
-        navigate('/map');
-      }, 1500);
-    }
-  };
-
-  // Manejar cambios en la configuración de accesibilidad
-  const handleAccessibilityChange = (setting, value) => {
-    setAccessibilitySettings(prev => ({
-      ...prev,
-      [setting]: value
-    }));
-    
-    // Leer el cambio en voz alta
-    if (setting === 'fontSize') {
-      const sizeMap = {
-        'small': 'pequeño',
-        'medium': 'mediano',
-        'large': 'grande'
-      };
-      speakText(`Tamaño de letra cambiado a ${sizeMap[value]}`);
-    } else if (setting === 'highContrast') {
-      speakText(value ? "Alto contraste activado" : "Alto contraste desactivado");
-    } else if (setting === 'theme') {
-      const themeMap = {
-        'pastel': 'pastel',
-        'dark': 'oscuro',
-        'blue': 'azul'
-      };
-      speakText(`Tema cambiado a ${themeMap[value]}`);
-    } else if (setting === 'textToSpeech') {
-      speakText(value ? "Lectura en voz alta activada" : "Lectura en voz alta desactivada");
-    }
-  };
-
-  // Función para volver a la página de inicio
-  const handleBackClick = () => {
-    speakText(backMessage);
-    navigate('/');
-  };
-
-  // Determinar las clases CSS según las opciones de accesibilidad
-  const getThemeClass = () => {
-    switch (theme) {
-      case 'dark': return 'theme-dark';
-      case 'blue': return 'theme-blue';
-      default: return 'theme-pastel';
-    }
-  };
-
-  const getFontSizeClass = () => {
-    switch (fontSize) {
-      case 'small': return 'font-small';
-      case 'large': return 'font-large';
-      default: return 'font-medium';
-    }
-  };
-
-  const getContrastClass = () => {
-    return highContrast ? 'high-contrast' : '';
-  };
-
+export default function Login() {
   return (
-    <div className={`register-page ${getThemeClass()} ${getFontSizeClass()} ${getContrastClass()}`}>
-      {/* Barra de navegación */}
-      <nav className="navbar">
-        <div className="logo">Suki</div>
-        <button className="back-button" onClick={handleBackClick}>
-          Volver
-        </button>
-      </nav>
-
-      {/* Contenido principal */}
-      <main className="main-content">
-        <div className="register-container">
-          <h1 className="register-title">Crear Cuenta</h1>
-          
-          <div className="mascot-container">
-            <RaccoonMascot size="medium" animated={true} />
-          </div>
-          
-          <form onSubmit={handleSubmit} className="register-form">
-            {/* Campo de nombre de usuario */}
-            <div className="form-group">
-              <label htmlFor="username">{usernameMessage}</label>
-              <input
-                type="text"
-                id="username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                onFocus={() => speakText(usernameMessage)}
-                className={errors.username ? 'error' : ''}
-                aria-required="true"
-              />
-              {errors.username && <p className="error-message">{errors.username}</p>}
-            </div>
-            
-            {/* Campo de contraseña */}
-            <div className="form-group">
-              <label htmlFor="password">{passwordMessage}</label>
-              <input
-                type="password"
-                id="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                onFocus={() => speakText(passwordMessage)}
-                className={errors.password ? 'error' : ''}
-                aria-required="true"
-              />
-              {errors.password && <p className="error-message">{errors.password}</p>}
-            </div>
-            
-            {/* Campo de confirmación de contraseña */}
-            <div className="form-group">
-              <label htmlFor="confirmPassword">{confirmPasswordMessage}</label>
-              <input
-                type="password"
-                id="confirmPassword"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                onFocus={() => speakText(confirmPasswordMessage)}
-                className={errors.confirmPassword ? 'error' : ''}
-                aria-required="true"
-              />
-              {errors.confirmPassword && <p className="error-message">{errors.confirmPassword}</p>}
-            </div>
-            
-            {/* Campo de edad */}
-            <div className="form-group">
-              <label htmlFor="age">{ageMessage}</label>
-              <select
-                id="age"
-                value={age}
-                onChange={(e) => setAge(e.target.value)}
-                onFocus={() => speakText(ageMessage)}
-                className={errors.age ? 'error' : ''}
-                aria-required="true"
-              >
-                <option value="">Selecciona tu edad</option>
-                <option value="1">1 año</option>
-                <option value="2">2 años</option>
-                <option value="3">3 años</option>
-                <option value="4">4 años</option>
-                <option value="5">5 años</option>
-              </select>
-              {errors.age && <p className="error-message">{errors.age}</p>}
-            </div>
-            
-            {/* Configuración de accesibilidad */}
-            <div className="accessibility-settings">
-              <h2>Configuración de Accesibilidad</h2>
-              
-              {/* Tamaño de letra */}
-              <div className="setting-group">
-                <label>Tamaño de letra</label>
-                <div className="radio-group">
-                  <label>
-                    <input
-                      type="radio"
-                      name="fontSize"
-                      value="small"
-                      checked={accessibilitySettings.fontSize === 'small'}
-                      onChange={() => handleAccessibilityChange('fontSize', 'small')}
-                    />
-                    Pequeño
-                  </label>
-                  <label>
-                    <input
-                      type="radio"
-                      name="fontSize"
-                      value="medium"
-                      checked={accessibilitySettings.fontSize === 'medium'}
-                      onChange={() => handleAccessibilityChange('fontSize', 'medium')}
-                    />
-                    Mediano
-                  </label>
-                  <label>
-                    <input
-                      type="radio"
-                      name="fontSize"
-                      value="large"
-                      checked={accessibilitySettings.fontSize === 'large'}
-                      onChange={() => handleAccessibilityChange('fontSize', 'large')}
-                    />
-                    Grande
-                  </label>
-                </div>
-              </div>
-              
-              {/* Alto contraste */}
-              <div className="setting-group">
-                <label>
-                  <input
-                    type="checkbox"
-                    checked={accessibilitySettings.highContrast}
-                    onChange={(e) => handleAccessibilityChange('highContrast', e.target.checked)}
-                  />
-                  Alto contraste
-                </label>
-              </div>
-              
-              {/* Tema */}
-              <div className="setting-group">
-                <label>Tema</label>
-                <div className="radio-group">
-                  <label>
-                    <input
-                      type="radio"
-                      name="theme"
-                      value="pastel"
-                      checked={accessibilitySettings.theme === 'pastel'}
-                      onChange={() => handleAccessibilityChange('theme', 'pastel')}
-                    />
-                    Pastel
-                  </label>
-                  <label>
-                    <input
-                      type="radio"
-                      name="theme"
-                      value="dark"
-                      checked={accessibilitySettings.theme === 'dark'}
-                      onChange={() => handleAccessibilityChange('theme', 'dark')}
-                    />
-                    Oscuro
-                  </label>
-                  <label>
-                    <input
-                      type="radio"
-                      name="theme"
-                      value="blue"
-                      checked={accessibilitySettings.theme === 'blue'}
-                      onChange={() => handleAccessibilityChange('theme', 'blue')}
-                    />
-                    Azul
-                  </label>
-                </div>
-              </div>
-              
-              {/* Lectura en voz alta */}
-              <div className="setting-group">
-                <label>
-                  <input
-                    type="checkbox"
-                    checked={accessibilitySettings.textToSpeech}
-                    onChange={(e) => handleAccessibilityChange('textToSpeech', e.target.checked)}
-                  />
-                  Lectura en voz alta
-                </label>
-              </div>
-            </div>
-            
-            {/* Botón de envío */}
-            <button 
-              type="submit" 
-              className="submit-button"
-              disabled={isSubmitting}
-              onClick={() => speakText(submitMessage)}
-            >
-              {isSubmitting ? 'Registrando...' : submitMessage}
-            </button>
-          </form>
+    <div className="login-page">
+      {/* Encabezado con mapache y título */}
+      <div className="header">
+        <h1>Bienvenido a<br />Suki</h1>
+        <div className="blob-container">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" width="626" height="720" viewBox="0 0 626 720" fill="none">
+        <circle cx="282.5" cy="282.5" r="282.5" fill="#DBFFD8"/>
+        <ellipse cx="275.5" cy="283" rx="228.5" ry="227" fill="#F5FFF2"/>
+        <ellipse cx="233" cy="254" rx="203" ry="192" fill="#DBFFD8"/>
+        <path d="M238.823 256.878C238.067 256.021 239.108 254.771 240.088 255.36L246.639 259.295C246.967 259.492 247.379 259.484 247.699 259.276L252.222 256.335C253.062 255.788 254.095 256.681 253.676 257.591L251.422 262.489C251.261 262.838 251.315 263.248 251.559 263.544L256.173 269.127C256.895 270.002 255.835 271.213 254.872 270.613L248.76 266.798C248.43 266.592 248.011 266.596 247.685 266.808L243.173 269.743C242.332 270.289 241.3 269.397 241.719 268.486L243.964 263.609C244.129 263.25 244.067 262.826 243.805 262.53L238.823 256.878Z" fill="white"/>
+        <path d="M261.379 258.227C261.09 257.131 262.559 256.476 263.181 257.423L273.786 273.548C273.998 273.869 274.374 274.04 274.755 273.989L287.963 272.219C288.971 272.084 289.514 273.366 288.714 273.996L278.251 282.243C277.948 282.482 277.81 282.874 277.895 283.25L281.963 301.135C282.212 302.231 280.743 302.841 280.142 301.891L270.375 286.444C270.167 286.114 269.785 285.935 269.397 285.987L256.202 287.756C255.194 287.891 254.651 286.609 255.45 285.98L265.895 277.747C266.207 277.501 266.344 277.092 266.243 276.707L261.379 258.227Z" fill="white"/>
+        <path d="M562.632 243.273C562.903 242.163 564.524 242.304 564.601 243.444L565.113 251.069C565.139 251.451 565.38 251.784 565.734 251.928L570.732 253.961C571.66 254.338 571.517 255.695 570.531 255.871L565.223 256.819C564.845 256.887 564.539 257.165 564.436 257.535L562.488 264.511C562.183 265.603 560.583 265.425 560.526 264.292L560.166 257.096C560.146 256.708 559.904 256.366 559.544 256.22L554.557 254.192C553.629 253.814 553.771 252.458 554.758 252.281L560.044 251.337C560.433 251.268 560.745 250.975 560.839 250.591L562.632 243.273Z" fill="white"/>
+        <path d="M574.409 262.558C575.143 261.695 576.52 262.526 576.099 263.578L568.921 281.493C568.779 281.85 568.853 282.257 569.112 282.54L578.11 292.37C578.797 293.12 578.055 294.298 577.081 294.002L564.335 290.125C563.966 290.013 563.565 290.123 563.305 290.408L550.949 303.963C550.191 304.794 548.851 303.937 549.288 302.901L556.388 286.06C556.54 285.7 556.468 285.285 556.204 284.997L547.215 275.176C546.528 274.426 547.27 273.248 548.243 273.545L560.967 277.415C561.347 277.53 561.761 277.409 562.019 277.106L574.409 262.558Z" fill="white"/>
+        <path d="M256.319 610.154C255.871 609.089 257.25 608.196 257.981 609.078L271.507 625.389C271.749 625.681 272.133 625.804 272.497 625.707L285.702 622.186C286.649 621.933 287.324 623.091 286.665 623.84L277.488 634.268C277.234 634.557 277.16 634.967 277.298 635.326L284.624 654.299C285.038 655.37 283.653 656.221 282.941 655.334L270.369 639.655C270.128 639.355 269.739 639.227 269.368 639.325L256.175 642.843C255.227 643.096 254.553 641.938 255.211 641.189L264.374 630.778C264.636 630.48 264.706 630.055 264.553 629.691L256.319 610.154Z" fill="white"/>
+        <path d="M267.868 591.944C267.399 590.988 268.744 590.262 269.588 591.015L276.242 596.958C276.54 597.225 276.977 597.329 277.364 597.226L283.81 595.505C284.875 595.221 285.752 596.417 284.963 597.079L280.194 601.083C279.906 601.324 279.819 601.699 279.97 602.043L283.146 609.282C283.567 610.241 282.211 610.92 281.393 610.159L275.263 604.461C274.965 604.184 274.519 604.073 274.125 604.178L267.694 605.895C266.629 606.179 265.752 604.983 266.541 604.321L271.289 600.335C271.587 600.084 271.669 599.691 271.496 599.339L267.868 591.944Z" fill="white"/>
+        <path d="M549.504 433.413C549.504 432.349 551.031 432.289 551.457 433.336L554.818 441.601C554.969 441.971 555.315 442.257 555.708 442.334L562.254 443.625C563.335 443.839 563.596 445.299 562.596 445.546L556.552 447.043C556.188 447.134 555.944 447.432 555.928 447.807L555.596 455.705C555.552 456.751 554.036 456.764 553.636 455.722L550.638 447.907C550.493 447.527 550.141 447.232 549.74 447.153L543.21 445.865C542.128 445.652 541.868 444.192 542.867 443.944L548.884 442.454C549.263 442.36 549.509 442.043 549.509 441.651L549.504 433.413Z" fill="white"/>
+        <path d="M572.652 445.932C573.333 445.026 574.757 445.771 574.401 446.846L568.337 465.168C568.216 465.533 568.315 465.935 568.591 466.202L578.175 475.461C578.907 476.168 578.238 477.389 577.249 477.153L564.289 474.065C563.913 473.976 563.52 474.11 563.278 474.411L551.776 488.699C551.072 489.574 549.682 488.801 550.054 487.74L556.107 470.496C556.236 470.127 556.139 469.717 555.858 469.445L546.284 460.195C545.552 459.488 546.22 458.267 547.21 458.503L560.147 461.585C560.534 461.678 560.939 461.531 561.178 461.213L572.652 445.932Z" fill="white"/>
+        </svg>
+        <div className="raccoon-container">
+          <img src={raccoon} alt="Mapache Suki" className="raccoon-login" />
         </div>
-      </main>
+        
+        </div>
+      </div>
+
+      {/* Formulario */}
+      <div className="login-container">
+        <h2>Registro</h2>
+
+        <form>
+          <div className="input-group">
+            <label>Correo Electrónico</label>
+            <div className="input-wrapper">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="18" viewBox="0 0 14 18" fill="none"> <path d="M6.74999 8.99999C9.23527 8.99999 11.25 6.98527 11.25 4.49999C11.25 2.01472 9.23527 0 6.74999 0C4.26472 0 2.25 2.01472 2.25 4.49999C2.25 6.98527 4.26472 8.99999 6.74999 8.99999Z" fill="#758A73"/> <path d="M6.74999 10.5C3.02378 10.5041 0.00414843 13.5238 0 17.25C0 17.6642 0.335777 18 0.749987 18H12.75C13.1642 18 13.4999 17.6642 13.4999 17.25C13.4958 13.5238 10.4762 10.5041 6.74999 10.5Z" fill="#758A73"/> </svg>
+              <input type="email" placeholder="correo@gmail.com" required />
+            </div>
+          </div>
+
+          <div className="input-group">
+            <label>Contraseña</label>
+            <div className="input-wrapper">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="19" viewBox="0 0 16 19" fill="none"> <path d="M13.4583 6.669V5.54167C13.4583 4.07193 12.8745 2.66238 11.8352 1.62312C10.796 0.583853 9.38641 0 7.91667 0C6.44693 0 5.03738 0.583853 3.99812 1.62312C2.95885 2.66238 2.375 4.07193 2.375 5.54167V6.669C1.66991 6.97673 1.06977 7.48325 0.647978 8.12663C0.226183 8.77 0.00101205 9.52235 0 10.2917V15.0417C0.00125705 16.0911 0.418698 17.0972 1.16076 17.8392C1.90282 18.5813 2.9089 18.9987 3.95833 19H11.875C12.9244 18.9987 13.9305 18.5813 14.6726 17.8392C15.4146 17.0972 15.8321 16.0911 15.8333 15.0417V10.2917C15.8323 9.52235 15.6072 8.77 15.1854 8.12663C14.7636 7.48325 14.1634 6.97673 13.4583 6.669ZM3.95833 5.54167C3.95833 4.49185 4.37537 3.48503 5.1177 2.7427C5.86003 2.00037 6.86685 1.58333 7.91667 1.58333C8.96648 1.58333 9.9733 2.00037 10.7156 2.7427C11.458 3.48503 11.875 4.49185 11.875 5.54167V6.33333H3.95833V5.54167ZM14.25 15.0417C14.25 15.6716 13.9998 16.2756 13.5544 16.721C13.109 17.1664 12.5049 17.4167 11.875 17.4167H3.95833C3.32844 17.4167 2.72435 17.1664 2.27895 16.721C1.83356 16.2756 1.58333 15.6716 1.58333 15.0417V10.2917C1.58333 9.66178 1.83356 9.05769 2.27895 8.61229C2.72435 8.16689 3.32844 7.91667 3.95833 7.91667H11.875C12.5049 7.91667 13.109 8.16689 13.5544 8.61229C13.9998 9.05769 14.25 9.66178 14.25 10.2917V15.0417Z" fill="#758A73"/> <path d="M7.91667 11.0833C7.7067 11.0833 7.50534 11.1667 7.35687 11.3151C7.20841 11.4636 7.125 11.665 7.125 11.8749V13.4583C7.125 13.6682 7.20841 13.8696 7.35687 14.018C7.50534 14.1665 7.7067 14.2499 7.91667 14.2499C8.12663 14.2499 8.32799 14.1665 8.47646 14.018C8.62493 13.8696 8.70833 13.6682 8.70833 13.4583V11.8749C8.70833 11.665 8.62493 11.4636 8.47646 11.3151C8.32799 11.1667 8.12663 11.0833 7.91667 11.0833Z" fill="#758A73"/> </svg>
+              <input type="password" placeholder="************" required />
+            </div>
+          </div>
+
+            <div className="input-group">
+            <label>Confirmar Contraseña</label>
+            <div className="input-wrapper">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="19" viewBox="0 0 16 19" fill="none"> <path d="M13.4583 6.669V5.54167C13.4583 4.07193 12.8745 2.66238 11.8352 1.62312C10.796 0.583853 9.38641 0 7.91667 0C6.44693 0 5.03738 0.583853 3.99812 1.62312C2.95885 2.66238 2.375 4.07193 2.375 5.54167V6.669C1.66991 6.97673 1.06977 7.48325 0.647978 8.12663C0.226183 8.77 0.00101205 9.52235 0 10.2917V15.0417C0.00125705 16.0911 0.418698 17.0972 1.16076 17.8392C1.90282 18.5813 2.9089 18.9987 3.95833 19H11.875C12.9244 18.9987 13.9305 18.5813 14.6726 17.8392C15.4146 17.0972 15.8321 16.0911 15.8333 15.0417V10.2917C15.8323 9.52235 15.6072 8.77 15.1854 8.12663C14.7636 7.48325 14.1634 6.97673 13.4583 6.669ZM3.95833 5.54167C3.95833 4.49185 4.37537 3.48503 5.1177 2.7427C5.86003 2.00037 6.86685 1.58333 7.91667 1.58333C8.96648 1.58333 9.9733 2.00037 10.7156 2.7427C11.458 3.48503 11.875 4.49185 11.875 5.54167V6.33333H3.95833V5.54167ZM14.25 15.0417C14.25 15.6716 13.9998 16.2756 13.5544 16.721C13.109 17.1664 12.5049 17.4167 11.875 17.4167H3.95833C3.32844 17.4167 2.72435 17.1664 2.27895 16.721C1.83356 16.2756 1.58333 15.6716 1.58333 15.0417V10.2917C1.58333 9.66178 1.83356 9.05769 2.27895 8.61229C2.72435 8.16689 3.32844 7.91667 3.95833 7.91667H11.875C12.5049 7.91667 13.109 8.16689 13.5544 8.61229C13.9998 9.05769 14.25 9.66178 14.25 10.2917V15.0417Z" fill="#758A73"/> <path d="M7.91667 11.0833C7.7067 11.0833 7.50534 11.1667 7.35687 11.3151C7.20841 11.4636 7.125 11.665 7.125 11.8749V13.4583C7.125 13.6682 7.20841 13.8696 7.35687 14.018C7.50534 14.1665 7.7067 14.2499 7.91667 14.2499C8.12663 14.2499 8.32799 14.1665 8.47646 14.018C8.62493 13.8696 8.70833 13.6682 8.70833 13.4583V11.8749C8.70833 11.665 8.62493 11.4636 8.47646 11.3151C8.32799 11.1667 8.12663 11.0833 7.91667 11.0833Z" fill="#758A73"/> </svg>
+              <input type="password" placeholder="************" required />
+            </div>
+          </div>
+
+
+
+          <button type="submit" className="login-button">
+            Siguiente
+          </button>
+
+          <p className="register-text">
+            Ya tienes cuenta? <a href="#">Inicia Sesion</a>
+          </p>
+        </form>
+      </div>
 
       <style jsx>{`
-        .register-page {
+        .login-page {
+          background-color: #F5FFF2;
           min-height: 100vh;
           display: flex;
           flex-direction: column;
-        }
-        
-        /* Temas */
-        .theme-pastel {
-          background: linear-gradient(135deg, #e6f7e6 0%, #c3e9c3 100%);
-          color: #2d7a2d;
-        }
-        
-        .theme-dark {
-          background: linear-gradient(135deg, #2c3e2c 0%, #1a281a 100%);
-          color: #a8d5a8;
-        }
-        
-        .theme-blue {
-          background: linear-gradient(135deg, #e6f2ff 0%, #c3e0ff 100%);
-          color: #2d5a7a;
-        }
-        
-        /* Tamaños de fuente */
-        .font-small {
-          font-size: 14px;
-        }
-        
-        .font-medium {
-          font-size: 16px;
-        }
-        
-        .font-large {
-          font-size: 20px;
-        }
-        
-        /* Alto contraste */
-        .high-contrast {
-          filter: contrast(150%);
-        }
-        
-        /* Barra de navegación */
-        .navbar {
-          background-color: rgba(168, 213, 168, 0.8);
-          padding: 15px 20px;
-          display: flex;
-          justify-content: space-between;
           align-items: center;
-          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+          justify-content: start;
+          font-family: 'Mulish', sans-serif;
         }
-        
-        .theme-dark .navbar {
-          background-color: rgba(44, 62, 44, 0.8);
-        }
-        
-        .theme-blue .navbar {
-          background-color: rgba(168, 193, 213, 0.8);
-        }
-        
-        .logo {
-          font-size: 28px;
-          font-weight: bold;
-          text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        
-        .back-button {
-          background-color: #6fa86f;
-          color: white;
-          border: none;
-          padding: 8px 16px;
-          border-radius: 20px;
-          font-size: 14px;
-          font-weight: bold;
-          cursor: pointer;
-          transition: all 0.3s ease;
-        }
-        
-        .theme-dark .back-button {
-          background-color: #4a6f4a;
-        }
-        
-        .theme-blue .back-button {
-          background-color: #6f8fa8;
-        }
-        
-        .back-button:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-        
-        /* Contenido principal */
-        .main-content {
-          flex-grow: 1;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          padding: 20px;
-        }
-        
-        .register-container {
-          background-color: rgba(255, 255, 255, 0.8);
-          border-radius: 20px;
-          padding: 30px;
-          width: 100%;
-          max-width: 500px;
-          box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+
+        .header {
           text-align: center;
+          margin-top: 40px;
+          position: relative;
         }
-        
-        .theme-dark .register-container {
-          background-color: rgba(44, 62, 44, 0.8);
-        }
-        
-        .theme-blue .register-container {
-          background-color: rgba(230, 242, 255, 0.8);
-        }
-        
-        .register-title {
-          font-size: 32px;
+
+        .header h1 {
+          color: #4E8F4E;
+          font-family: 'Fredoka', sans-serif;
+          font-size: 36px;
+          font-weight: 700;
+          line-height: 1.2;
           margin-bottom: 20px;
+          z-index: 1;
+          position: relative;
         }
-        
-        .mascot-container {
-          margin: 20px 0;
-        }
-        
-        .register-form {
-          text-align: left;
-        }
-        
-        .form-group {
-          margin-bottom: 20px;
-        }
-        
-        .form-group label {
-          display: block;
-          margin-bottom: 5px;
-          font-weight: bold;
-        }
-        
-        .form-group input,
-        .form-group select {
+           .blob-container {
+          position: relative;
           width: 100%;
-          padding: 10px;
-          border: 2px solid #a8d5a8;
-          border-radius: 10px;
-          font-size: 16px;
-          box-sizing: border-box;
-        }
-        
-        .theme-dark .form-group input,
-        .theme-dark .form-group select {
-          border-color: #4a6f4a;
-          background-color: #2c3e2c;
-          color: #a8d5a8;
-        }
-        
-        .theme-blue .form-group input,
-        .theme-blue .form-group select {
-          border-color: #6f8fa8;
-          background-color: white;
-          color: #2d5a7a;
-        }
-        
-        .form-group input.error,
-        .form-group select.error {
-          border-color: #ff6b6b;
-        }
-        
-        .error-message {
-          color: #ff6b6b;
-          font-size: 14px;
-          margin-top: 5px;
-        }
-        
-        .accessibility-settings {
-          margin: 30px 0;
-          padding: 20px;
-          background-color: rgba(255, 255, 255, 0.5);
-          border-radius: 15px;
-        }
-        
-        .theme-dark .accessibility-settings {
-          background-color: rgba(44, 62, 44, 0.5);
-        }
-        
-        .theme-blue .accessibility-settings {
-          background-color: rgba(230, 242, 255, 0.5);
-        }
-        
-        .accessibility-settings h2 {
-          font-size: 20px;
-          margin-top: 0;
-          margin-bottom: 15px;
-        }
-        
-        .setting-group {
-          margin-bottom: 15px;
-        }
-        
-        .radio-group {
           display: flex;
-          gap: 15px;
-          margin-top: 5px;
+          align-items: center;
+          justify-content: center;
+          
         }
-        
-        .submit-button {
+        .blob-container svg {
+          position: absolute;
+          top: -10%; /* ajusta según necesites */
+          left: -110%;
+          transform: translateY(-50%);
+          width: 625.04px; /* reduce tamaño si es necesario */
+          height: 719.28px;
+          z-index: 0;
+        }
+        .raccoon-container {
+          position: relative;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 1;
+        }
+
+
+
+
+        .raccoon-login {
+          width: 200px;
+          height: auto;
+        }
+
+        .login-container {
+          background: #fff;
+          border-radius: 20px 20px 0 0;
+          height: 100vh;
           width: 100%;
-          padding: 15px;
-          background-color: #8bc34a;
-          color: white;
+          overflow: hidden;
+          flex: 1;
+          
+        
+          
+        }
+
+        form {
+          padding: 30px;
+        }
+
+
+        .login-container h2 {
+          color: #224420;
+          font-family: 'Quicksand';
+          font-weigth: 700;
+          font-size: 22px;
+          text-align: center;
+          margin-bottom: 32px;
+        }
+
+        .input-group {
+          margin-bottom: 16px;
+        }
+
+        label {
+          display: flex;
+          font-weight: 700;
+          font-size: 16px;
+          margin-bottom: 6px;
+          color: #224420;
+        }
+
+        .input-wrapper {
+          display: flex;
+          align-items: center;
+          background: white;
+          border: 1px solid #BAE6B7;
+          border-radius: 12px;
+          padding: 10px 14px;
+        }
+
+        .input-wrapper svg {
+          margin-right: 10px;
+          font-size: 1px;
+          font-family: 'Mulish';
+          font-weight: 400;
+        }
+
+        input {
           border: none;
-          border-radius: 30px;
+          outline: none;
+          font-size: 16px;
+          width: 100%;
+          color: #1C1C1C;
+          font-family: 'Mulish';
+        }
+
+        input::placeholder {
+          font-family: 'Mulish';
+          color: #758A73;
+        }
+
+        .forgot-password {
+          font-family: 'Mulish';
+          display: block;
+          text-align: right;
+          font-size: 14px;
+          color: #758A73;
+          text-decoration: none;
+          margin-top: 4px;
+          margin-bottom: 20px;
+        }
+
+        .login-button {
+          width: 100%;
+          background-color: #56A74F;
+          color: white;
+          font-weight: 700;
           font-size: 18px;
-          font-weight: bold;
+          border: none; 
+          border-radius: 10px;
+          padding: 14px 0;
           cursor: pointer;
-          transition: all 0.3s ease;
+          transition: background 0.3s ease;
+          font-family: 'Mulish', sans-serif;
         }
-        
-        .theme-dark .submit-button {
-          background-color: #689f38;
+
+        .login-button:hover {
+          background-color: #4E8F4E;
         }
-        
-        .theme-blue .submit-button {
-          background-color: #4a90e2;
+
+        .register-text {
+          text-align: center;
+          margin-top: 20px;
+          font-size: 15px;
         }
-        
-        .submit-button:hover:not(:disabled) {
-          transform: translateY(-2px);
-          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-        
-        .submit-button:disabled {
-          opacity: 0.7;
-          cursor: not-allowed;
+
+        .register-text a {
+          color: #4E8F4E;
+          font-weight: 600;
+          text-decoration: none;
         }
       `}</style>
     </div>
   );
-};
-
-export default RegisterPage;
+}

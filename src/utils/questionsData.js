@@ -1,6 +1,6 @@
 // Datos de preguntas para cada materia
 export const questionsData = {
-  'Ética y Valores': [
+  '1. Ética y Valores': [
     // Nivel 1
     {
       id: 1,
@@ -812,7 +812,7 @@ export const questionsData = {
       image: null
     }
   ],
-  'Matemáticas': [
+  '2. Matemáticas': [
     {
       id: 1,
       level: 1,
@@ -894,7 +894,7 @@ export const questionsData = {
       image: null
     }
   ],
-  'Inglés': [
+  '3. Inglés': [
     {
       id: 2,
       level: 1,
@@ -1697,7 +1697,7 @@ export const questionsData = {
       image: null
     }
   ],
-  'Inglés': [
+  '3. Inglés': [
     // Nivel 1 (completo)
     {
       id: 1,
@@ -2509,7 +2509,7 @@ export const questionsData = {
       image: null
     }
   ],
-  'Biología': [
+  '4. Biologia': [
     {
       id: 1,
       level: 1,
@@ -2591,7 +2591,7 @@ export const questionsData = {
       image: null
     }
   ],
-  'Biología': [
+  '4. Biología': [
     // Nivel 3
     {
       id: 11,
@@ -3241,7 +3241,7 @@ export const questionsData = {
     image: null
   }
   ],
-  'Historia': [
+  '5. Historia': [
     {
       id: 1,
       level: 1,
@@ -3323,7 +3323,7 @@ export const questionsData = {
       image: null
     }
   ],
-  'Español': [
+  '6. Español': [
     {
       id: 1,
       level: 1,
@@ -3405,7 +3405,7 @@ export const questionsData = {
       image: null
     }
   ],
-  'Español': [
+  '6. Español': [
     // Nivel 3
     {
       id: 11,
@@ -4057,33 +4057,33 @@ export const questionsData = {
   ]
 };
 
-// Función para obtener preguntas de una materia y nivel específicos
-export const getQuestions = (subject, level) => {
-  const subjectQuestions = questionsData[subject];
-  if (!subjectQuestions) return [];
-  
-  return subjectQuestions.filter(q => q.level === level);
-};
+  // Función para obtener preguntas de una materia y nivel específicos
+  export const getQuestions = (subject, level) => {
+    const subjectQuestions = questionsData[subject];
+    if (!subjectQuestions) return [];
+    
+    return subjectQuestions.filter(q => q.level === level);
+  };
 
-// Función para obtener una pregunta aleatoria de una materia y nivel
-export const getRandomQuestion = (subject, level) => {
-  const questions = getQuestions(subject, level);
-  if (questions.length === 0) return null;
-  
-  const randomIndex = Math.floor(Math.random() * questions.length);
-  return questions[randomIndex];
-};
+  // Función para obtener una pregunta aleatoria de una materia y nivel
+  export const getRandomQuestion = (subject, level) => {
+    const questions = getQuestions(subject, level);
+    if (questions.length === 0) return null;
+    
+    const randomIndex = Math.floor(Math.random() * questions.length);
+    return questions[randomIndex];
+  };
 
-// Función para obtener todas las preguntas de una materia
-export const getAllSubjectQuestions = (subject) => {
-  return questionsData[subject] || [];
-};
+  // Función para obtener todas las preguntas de una materia
+  export const getAllSubjectQuestions = (subject) => {
+    return questionsData[subject] || [];
+  };
 
-// Función para obtener el número total de niveles de una materia
-export const getTotalLevels = (subject) => {
-  const subjectQuestions = questionsData[subject];
-  if (!subjectQuestions) return 0;
-  
-  const levels = subjectQuestions.map(q => q.level);
-  return Math.max(...levels);
-};
+  // Función para obtener el número total de niveles de una materia
+  export const getTotalLevels = (subject) => {
+    const subjectQuestions = questionsData[subject];
+    if (!subjectQuestions) return 0;
+    
+    const levels = subjectQuestions.map(q => q.level);
+    return Math.max(...levels);
+  };
