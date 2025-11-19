@@ -5,9 +5,7 @@ export default function Login() {
   return (
     <div className="login-page">
       {/* Encabezado con mapache y título */}
-      <div className="header">
-        <h1>Bienvenido a<br />Suki</h1>
-        <div className="blob-container">
+              <div className="blob-container">
         
         <svg xmlns="http://www.w3.org/2000/svg" width="626" height="720" viewBox="0 0 626 720" fill="none">
         <circle cx="282.5" cy="282.5" r="282.5" fill="#DBFFD8"/>
@@ -22,12 +20,14 @@ export default function Login() {
         <path d="M549.504 433.413C549.504 432.349 551.031 432.289 551.457 433.336L554.818 441.601C554.969 441.971 555.315 442.257 555.708 442.334L562.254 443.625C563.335 443.839 563.596 445.299 562.596 445.546L556.552 447.043C556.188 447.134 555.944 447.432 555.928 447.807L555.596 455.705C555.552 456.751 554.036 456.764 553.636 455.722L550.638 447.907C550.493 447.527 550.141 447.232 549.74 447.153L543.21 445.865C542.128 445.652 541.868 444.192 542.867 443.944L548.884 442.454C549.263 442.36 549.509 442.043 549.509 441.651L549.504 433.413Z" fill="white"/>
         <path d="M572.652 445.932C573.333 445.026 574.757 445.771 574.401 446.846L568.337 465.168C568.216 465.533 568.315 465.935 568.591 466.202L578.175 475.461C578.907 476.168 578.238 477.389 577.249 477.153L564.289 474.065C563.913 473.976 563.52 474.11 563.278 474.411L551.776 488.699C551.072 489.574 549.682 488.801 550.054 487.74L556.107 470.496C556.236 470.127 556.139 469.717 555.858 469.445L546.284 460.195C545.552 459.488 546.22 458.267 547.21 458.503L560.147 461.585C560.534 461.678 560.939 461.531 561.178 461.213L572.652 445.932Z" fill="white"/>
         </svg>
-        <div className="raccoon-container">
+        </div>
+      <div className="header">
+        <h1>Bienvenido a<br />Suki</h1>
+        
+      </div>
+           <div className="raccoon-container">
           <img src={raccoon} alt="Mapache Suki" className="raccoon-login" />
         </div>
-        
-        </div>
-      </div>
 
       {/* Formulario */}
       <div className="login-container">
@@ -90,23 +90,27 @@ export default function Login() {
           margin-bottom: 20px;
           z-index: 1;
           position: relative;
+          
         }
-           .blob-container {
-          position: relative;
-          width: 100%;
+        .blob-container {
+          position: fixed;
+          top: 25%;
+          left: 25%;
+          transform: translate(-50%, -50%);
+         width: 625.04px; /* reduce tamaño si es necesario */
+          height: 719.28px;
           display: flex;
           align-items: center;
           justify-content: center;
-          
-        }
-        .blob-container svg {
-          position: absolute;
-          top: -10%; /* ajusta según necesites */
-          left: -110%;
-          transform: translateY(-50%);
-          width: 625.04px; /* reduce tamaño si es necesario */
-          height: 719.28px;
           z-index: 0;
+          pointer-events: none;
+        }
+        
+        .blob-container svg {
+          width: 100%;
+          max-width: 625px;
+          height: auto;
+          opacity: 0.8;
         }
         .raccoon-container {
           position: relative;
@@ -114,6 +118,7 @@ export default function Login() {
           align-items: center;
           justify-content: center;
           z-index: 1;
+          width: 250px;
         }
 
 
@@ -122,16 +127,17 @@ export default function Login() {
         .raccoon-login {
           width: 250px;
           height: auto;
+          transform: scale(1.4)translateY(32px);
         }
 
         .login-container {
           background: #fff;
           border-radius: 20px 20px 0 0;
-          height: 100vh;
+          min-height: 60vh;
           width: 100%;
           overflow: hidden;
           flex: 1;
-          
+          z-index: 1;
         
           
         }

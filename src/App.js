@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AccessibilityProvider } from './context/AccessibilityContext';
 import { UserProvider } from './context/UserContext';
-import HomePage from './pages/HomePage';
 import EntrarPage from './pages/EntrarPage';
 import RegisterPage from './pages/RegisterPage';
 import Register2Page from './pages/Register2Page';
@@ -23,7 +22,7 @@ function App() {
         <BrowserRouter>
           <div className="App">
             <Routes>
-              <Route path="/" element={<HomePage />} />
+              <Route path="/" element={<LandingPage />} />
               <Route path="/entrar" element={<EntrarPage />} />
               <Route path="/register" element={<RegisterPage />} />
               <Route path="/map" element={<InteractiveMap />} />
