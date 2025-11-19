@@ -11,9 +11,7 @@ export default function MainDashboard() {
           </svg>
         </button>
         <button className="nav-button accessibility">
-        <svg xmlns="http://www.w3.org/2000/svg" width="23" height="28" viewBox="0 0 23 28" fill="none">
-        <path d="M8.14817 3.40507C8.14817 2.73161 8.31676 2.07327 8.63262 1.51331C8.94847 0.953353 9.39742 0.516918 9.92267 0.259197C10.4479 0.00147538 11.0259 -0.0659563 11.5835 0.0654289C12.1411 0.196814 12.6533 0.521115 13.0553 0.997322C13.4573 1.47353 13.7311 2.08025 13.842 2.74077C13.9529 3.40129 13.896 4.08593 13.6785 4.70813C13.4609 5.33032 13.0924 5.86212 12.6197 6.23627C12.147 6.61043 11.5912 6.81013 11.0227 6.81013C10.2603 6.81013 9.52918 6.45138 8.9901 5.81281C8.45102 5.17424 8.14817 4.30814 8.14817 3.40507ZM21.5627 22.7004H20.6199L19.5505 19.5224C19.3032 18.7838 18.8739 18.1506 18.3184 17.7052C17.763 17.2598 17.1072 17.0229 16.4364 17.0253H12.9391C12.812 17.0253 12.6902 16.9655 12.6003 16.8591C12.5105 16.7527 12.46 16.6083 12.46 16.4578V14.7553H16.7718C17.153 14.7553 17.5186 14.5759 17.7881 14.2566C18.0577 13.9373 18.2091 13.5043 18.2091 13.0527C18.2091 12.6012 18.0577 12.1682 17.7881 11.8489C17.5186 11.5296 17.153 11.3502 16.7718 11.3502H12.46V9.64768C12.46 9.19614 12.3086 8.7631 12.039 8.44381C11.7695 8.12452 11.4039 7.94515 11.0227 7.94515C10.6415 7.94515 10.2759 8.12452 10.0064 8.44381C9.73687 8.7631 9.58544 9.19614 9.58544 9.64768V16.4578C9.58834 17.3334 9.83539 18.1834 10.2882 18.8755C10.741 19.5677 11.3741 20.0632 12.0892 20.2851C11.78 21.1849 11.2806 21.9753 10.639 22.5804C9.99745 23.1855 9.23528 23.585 8.42575 23.7404C7.61622 23.8958 6.78655 23.802 6.01647 23.4679C5.24639 23.1339 4.5618 22.5708 4.02849 21.8328C3.49517 21.0948 3.13106 20.2068 2.97116 19.254C2.81125 18.3012 2.86093 17.3156 3.1154 16.3922C3.36988 15.4687 3.82061 14.6382 4.42426 13.9806C5.02792 13.3231 5.76421 12.8605 6.56237 12.6373C6.9334 12.5335 7.2544 12.2593 7.45476 11.8751C7.65511 11.4909 7.71842 11.0281 7.63075 10.5886C7.54307 10.1491 7.3116 9.76888 6.98725 9.53154C6.66291 9.2942 6.27225 9.21921 5.90123 9.32307C4.57958 9.69333 3.3647 10.4729 2.38091 11.582C1.39712 12.691 0.679738 14.0898 0.302176 15.6351C-0.0753852 17.1805 -0.0995717 18.8169 0.232092 20.3769C0.563755 21.937 1.23936 23.3646 2.18977 24.5138C3.14019 25.663 4.33128 26.4925 5.64118 26.9173C6.95108 27.3421 8.33275 27.3471 9.6448 26.9317C10.9568 26.5163 12.1522 25.6954 13.1085 24.5531C14.0648 23.4108 14.7477 21.988 15.0873 20.4304H16.4288C16.5243 20.4303 16.6178 20.4641 16.697 20.5274C16.7762 20.5907 16.8376 20.6807 16.8734 20.7856L18.3107 25.0352C18.4174 25.3513 18.6017 25.6223 18.8398 25.8131C19.078 26.0039 19.3589 26.1058 19.6464 26.1055H21.5627C21.9439 26.1055 22.3095 25.9261 22.579 25.6068C22.8486 25.2875 23 24.8545 23 24.403C23 23.9514 22.8486 23.5184 22.579 23.1991C22.3095 22.8798 21.9439 22.7004 21.5627 22.7004Z" fill="white"/>
-        </svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22"><path fill="currentColor" fill-rule="evenodd" d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2S2 6.477 2 12s4.477 10 10 10m0-13a2 2 0 1 0 0-4a2 2 0 0 0 0 4m-5.707.31a.75.75 0 0 0-.586 1.38l.002.001l.002.001l.01.004l.032.014a15 15 0 0 0 .572.225c.38.145.914.338 1.527.53c.988.312 2.236.64 3.398.748v1.24c0 .43-.124.853-.357 1.216l-2.524 3.925a.75.75 0 0 0 1.262.812l2.37-3.686l2.368 3.686a.75.75 0 0 0 1.262-.812l-2.524-3.925a2.25 2.25 0 0 1-.357-1.217v-1.239c1.162-.108 2.41-.436 3.399-.748a28 28 0 0 0 2.098-.755l.033-.014l.01-.004l.002-.001a.75.75 0 0 0-.585-1.381l-.007.003l-.027.011l-.11.045q-.148.061-.42.164c-.36.137-.865.32-1.444.502c-1.178.37-2.588.715-3.699.715s-2.52-.345-3.698-.715a27 27 0 0 1-1.974-.711L6.3 9.313z" clip-rule="evenodd"/></svg>
           Accesibilidad
         </button>
         <button className="nav-button sound">
@@ -74,31 +72,40 @@ export default function MainDashboard() {
 
         {/* Winding Path with Subjects */}
         <div className="path-container">
-          <svg className="dotted-path" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 1400" fill="none">
-            <path d="M150 0 L150 100 Q150 150 200 180 L250 200 M250 200 Q280 220 280 270 L280 310 Q280 360 230 390 L180 420 M180 420 Q130 450 100 500 L80 540 M80 540 Q60 590 90 640 L120 680 M120 680 Q150 720 200 740 L240 760 M240 760 Q280 780 280 830 L280 870 Q280 920 230 950 L180 980 M180 980 Q130 1010 100 1060 L70 1100 M70 1100 Q40 1150 70 1200 L100 1240 M100 1240 Q130 1280 180 1300 L220 1320" 
-                  stroke="#BAE6B7" strokeWidth="16" strokeDasharray="12,12" strokeLinecap="round"/>
+ <svg className="dotted-path" xmlns="http://www.w3.org/2000/svg" width="317" height="1622" viewBox="0 0 317 1622" fill="none">
+            <path d="M231.26 1338.77H81.4956C64.4374 1338.77 47.4434 1349.94 40.0913 1369.48C25.3869 1402.29 34 1596.37 34 1621.5" stroke="#D5FFC7" strokeWidth="70"/>
+            <path d="M212.128 878H76.2553C60.7794 878 45.3617 889.205 38.6915 908.813C25.3511 941.727 25 968.338 25 993.549C25 1055.54 40.0958 1114 81.532 1114H236" stroke="#D5FFC7" strokeWidth="70"/>
+            <path d="M212.374 417.407H76.3229C60.8265 417.407 45.3885 428.608 38.7095 448.21C25.3515 481.114 25 507.717 25 532.919C25 594.895 40.1157 653.332 81.6066 653.332H236.278" stroke="#D5FFC7" strokeWidth="70"/>
+            <path d="M197.583 192.65H108.583H96.9739L83.8174 189.857C74.9174 189.857 59.8261 166.823 52.8609 146.581C40.0047 109.219 46.0928 37.902 46.0928 0" stroke="#D5FFC7" strokeWidth="70"/>
+            <path d="M126.589 1114.02H246.693C260.373 1114.02 274.001 1124.69 279.897 1143.36C291.69 1174.71 292 1200.05 292 1224.06C292 1283.1 278.656 1338.77 242.029 1338.77H105.487" stroke="#D5FFC7" strokeWidth="70"/>
+            <path d="M126.589 1114.02H246.693C260.373 1114.02 274.001 1124.69 279.897 1143.36C291.69 1174.71 292 1200.05 292 1224.06C292 1283.1 278.656 1338.77 242.029 1338.77H105.487" stroke="#D5FFC7" strokeWidth="70"/>
+            <path d="M104.846 653.332H228.937C243.071 653.332 257.152 664.003 263.244 682.677C275.427 714.023 275.748 739.367 275.748 763.376C275.748 822.418 261.961 878.089 224.118 878.089H83.0435" stroke="#D5FFC7" strokeWidth="70"/>
+            <path d="M99.4286 192.649H223.519C237.653 192.649 251.734 203.32 257.826 221.994C270.01 253.34 270.33 278.684 270.33 302.694C270.33 361.735 256.544 417.407 218.7 417.407H77.6261" stroke="#D5FFC7" strokeWidth="70"/>
+            <path d="M231.26 1338.77H81.4956C64.4374 1338.77 47.4434 1349.94 40.0913 1369.48C25.3869 1402.29 34 1596.37 34 1621.5" stroke="#A9CEA7" strokeWidth="10" strokeDasharray="20 20"/>
+            <path d="M212.128 878H76.2553C60.7794 878 45.3617 889.205 38.6915 908.813C25.3511 941.727 25 968.338 25 993.549C25 1055.54 40.0958 1114 81.532 1114H236" stroke="#A9CEA7" strokeWidth="10" strokeDasharray="20 20"/>
+            <path d="M212.374 417.407H76.3229C60.8265 417.407 45.3885 428.608 38.7095 448.21C25.3515 481.114 25 507.717 25 532.919C25 594.895 40.1157 653.332 81.6066 653.332H236.278" stroke="#A9CEA7" strokeWidth="10" strokeDasharray="20 20"/>
+            <path d="M197.583 192.65H108.583H96.9739L83.8174 189.857C74.9174 189.857 59.8261 166.823 52.8609 146.581C40.0047 109.219 46.0928 37.902 46.0928 0" stroke="#A9CEA7" strokeWidth="10" strokeDasharray="20 20"/>
+            <path d="M126.589 1114.02H246.693C260.373 1114.02 274.001 1124.69 279.897 1143.36C291.69 1174.71 292 1200.05 292 1224.06C292 1283.1 278.656 1338.77 242.029 1338.77H105.487" stroke="#A9CEA7" strokeWidth="10" strokeDasharray="20 20"/>
+            <path d="M126.589 1114.02H246.693C260.373 1114.02 274.001 1124.69 279.897 1143.36C291.69 1174.71 292 1200.05 292 1224.06C292 1283.1 278.656 1338.77 242.029 1338.77H105.487" stroke="#A9CEA7" strokeWidth="10" strokeDasharray="20 20"/>
+            <path d="M104.846 653.332H228.937C243.071 653.332 257.152 664.003 263.244 682.677C275.427 714.023 275.748 739.367 275.748 763.376C275.748 822.418 261.961 878.089 224.118 878.089H83.0435" stroke="#A9CEA7" strokeWidth="10" strokeDasharray="20 20"/>
+            <path d="M99.4286 192.649H223.519C237.653 192.649 251.734 203.32 257.826 221.994C270.01 253.34 270.33 278.684 270.33 302.694C270.33 361.735 256.544 417.407 218.7 417.407H77.6261" stroke="#A9CEA7" strokeWidth="10" strokeDasharray="20 20"/>
           </svg>
 
           {/* Math Subject Node - positioned at first right curve apex */}
-          <div className="path-node" style={{top: '180px', right: '25px'}}>
+          <div className="path-node" style={{top: '100px', right: '0px'}}>
             <div className="subject-icon">
               <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none">
                 <text x="4" y="16" fontSize="14" fontWeight="bold" fill="#4E8F4E">+−</text>
                 <text x="4" y="8" fontSize="14" fontWeight="bold" fill="#4E8F4E">×÷</text>
               </svg>
             </div>
+            <div className="subject-title">Lenguaje</div>
           </div>
-          <div className="character-spot blue-monster" style={{top: '80px', left: '10px'}}>
-            <div className="monster-body blue">
-              <div className="monster-eye"></div>
-              <div className="monster-mouth"></div>
-              <div className="monster-tooth left"></div>
-              <div className="monster-tooth right"></div>
-            </div>
-          </div>
+          
+
 
           {/* Cube Subject Node - positioned at left curve apex */}
-          <div className="path-node" style={{top: '420px', left: '50px'}}>
+          <div className="path-node" style={{top: '290px', left: '0px'}}>
             <div className="subject-icon">
               <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#FF6B9D" strokeWidth="2">
                 <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/>
@@ -106,73 +113,46 @@ export default function MainDashboard() {
                 <line x1="12" y1="22.08" x2="12" y2="12"/>
               </svg>
             </div>
-          </div>
-          <div className="character-spot red-monster" style={{top: '310px', right: '20px'}}>
-            <div className="monster-body red">
-              <div className="monster-horn left"></div>
-              <div className="monster-horn right"></div>
-              <div className="monster-eye angry"></div>
-              <div className="monster-eye angry"></div>
-              <div className="monster-mouth angry"></div>
-            </div>
+             <div className="subject-title">Matematicas</div>
           </div>
 
+
           {/* Tree Subject Node - positioned at right curve apex */}
-          <div className="path-node" style={{top: '740px', right: '30px'}}>
+          <div className="path-node" style={{top: '510px', right: '0px'}}>
             <div className="subject-icon">
               <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="#4E8F4E">
                 <circle cx="12" cy="8" r="6"/>
                 <rect x="10" y="14" width="4" height="8" fill="#8B4513"/>
               </svg>
             </div>
-          </div>
-          <div className="character-spot green-monster" style={{top: '520px', left: '5px'}}>
-            <div className="monster-body green">
-              <div className="monster-eye single"></div>
-              <div className="monster-mouth happy"></div>
-              <div className="monster-tentacle"></div>
-              <div className="monster-tentacle"></div>
-            </div>
+             <div className="subject-title">Arte</div>
           </div>
 
+
           {/* Book Subject Node - positioned at left curve apex */}
-          <div className="path-node" style={{top: '980px', left: '50px'}}>
+          <div className="path-node" style={{top: '700px', left: '0px'}}>
             <div className="subject-icon">
               <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="#9B59B6">
                 <path d="M4 19.5A2.5 2.5 0 016.5 17H20v-2H6.5A2.5 2.5 0 004 17.5V19.5zM6.5 3A2.5 2.5 0 004 5.5v10A2.5 2.5 0 006.5 13H20V3H6.5z"/>
               </svg>
             </div>
-          </div>
-          <div className="character-spot purple-dog" style={{top: '850px', right: '30px'}}>
-            <div className="monster-body purple">
-              <div className="dog-ear left"></div>
-              <div className="dog-ear right"></div>
-              <div className="monster-eye"></div>
-              <div className="monster-eye"></div>
-              <div className="dog-snout"></div>
-            </div>
+             <div className="subject-title">Naturales</div>
           </div>
 
+
           {/* Flag Subject Node - positioned at right curve apex */}
-          <div className="path-node" style={{top: '1300px', right: '50px'}}>
+          <div className="path-node" style={{top: '900px', right: '0px'}}>
             <div className="subject-icon">
               <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#FFD700" strokeWidth="2">
                 <path d="M5 3v18M5 5h12l-2 4 2 4H5"/>
               </svg>
             </div>
-          </div>
-          <div className="character-spot yellow-monster" style={{top: '1070px', left: '10px'}}>
-            <div className="monster-body yellow">
-              <div className="monster-eye angry"></div>
-              <div className="monster-eye angry"></div>
-              <div className="monster-mouth growl"></div>
-              <div className="monster-fang left"></div>
-              <div className="monster-fang right"></div>
-            </div>
+             <div className="subject-title">Sociales</div>
           </div>
 
+
           {/* Bunny Subject Node - positioned at bottom left */}
-          <div className="path-node" style={{top: '1240px', left: '70px'}}>
+          <div className="path-node" style={{top: '1100px', left: '0px'}}>
             <div className="subject-icon">
               <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="#E91E63">
                 <ellipse cx="8" cy="6" rx="2" ry="5"/>
@@ -182,16 +162,9 @@ export default function MainDashboard() {
                 <circle cx="14" cy="13" r="1" fill="white"/>
               </svg>
             </div>
+             <div className="subject-title">Fisica</div>
           </div>
-          <div className="character-spot blue-cat" style={{top: '1180px', right: '40px'}}>
-            <div className="monster-body blue-gray">
-              <div className="cat-ear left"></div>
-              <div className="cat-ear right"></div>
-              <div className="monster-eye"></div>
-              <div className="monster-eye"></div>
-              <div className="cat-whiskers"></div>
-            </div>
-          </div>
+
         </div>
       </div>
 
@@ -222,7 +195,7 @@ export default function MainDashboard() {
       <style jsx>{`
 
         html{
-            padding: 10px;
+            padding: 25px;
         }
         .dashboard-page {
           background-color: #F5FFF2;
@@ -469,7 +442,8 @@ export default function MainDashboard() {
         .path-container {
           position: relative;
           min-height: 1400px;
-          margin: 20px 0;
+          margin: 20px 0px;
+          
         }
 
         .dotted-path {
@@ -486,17 +460,30 @@ export default function MainDashboard() {
           position: absolute;
           z-index: 2;
         }
+        
 
         .subject-icon {
-          width: 60px;
-          height: 60px;
+          width: 130px;
+          height: 130px;
           background: white;
-          border: 4px solid #C8E6C9;
+          border: 8px solid #C9F9B9;
           border-radius: 50%;
           display: flex;
           align-items: center;
           justify-content: center;
-          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .subject-title {
+          background: white;
+          padding: 8px 16px;
+          border-radius: 12px;
+          font-size: 14px;
+          font-weight: 700;
+          color: #224420;
+          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+          text-align: center;
+          white-space: nowrap;
+          font-family: 'Quicksand', sans-serif;
         }
 
         /* Added CSS-based monster character styles */
@@ -847,9 +834,7 @@ export default function MainDashboard() {
         }
 
         @media (max-width: 768px) {
-          .dashboard-page {
-            padding: 16px;
-          }
+
 
           .subjects-header h2 {
             font-size: 28px;
