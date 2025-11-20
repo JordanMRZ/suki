@@ -11,10 +11,11 @@ import { useNavigate } from "react-router-dom";
 import { useAuthStatus } from '../hooks/useAuthStatus'; 
 import { useChildData } from '../hooks/useChildData';
 
+
 export default function MainDashboard() {
   const navigate = useNavigate();
   const { loggedIn, checkingStatus } = useAuthStatus(); 
-  const { childName, childLevel, loading, xpPercentage } = useChildData();
+  const { childName, childLevel, loading, xpPercentage, activeMissions } = useChildData();
 
   const currentXpPercentage = xpPercentage ? `${xpPercentage}%` : '0%';
 
@@ -121,9 +122,29 @@ export default function MainDashboard() {
       {/* Daily Missions Section */}
       <div className="daily-missions">
         <h3>Misiones Diarias</h3>
-        <div className="mission-bar"></div>
-        <div className="mission-bar"></div>
-        <div className="mission-bar"></div>
+        <div className="missions-list">
+                {activeMissions.map((mission) => (
+                    <div key={mission.id} className={`mission-bar ${mission.completed ? 'completed' : ''}`}>
+                        <p className="mission-text">
+                            {mission.text}
+                        </p>
+                        <div className="mission-status">
+                            {!mission.completed && (
+                                <span className="mission-progress-text">
+                                    {mission.progress || 0}/{mission.goal}
+                                </span>
+                            )}
+                            {mission.completed && (
+                                <span className="mission-check-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M9 16.17L4.83 12L3.41 13.41L9 19L21 7L19.59 5.59L9 16.17Z" fill="#4CAF50"/>
+                                    </svg>
+                                </span>
+                            )}
+                        </div>
+                    </div>
+                ))}
+            </div>
       </div>
 
       {/* Main Content - Subjects Path */}
@@ -164,7 +185,7 @@ export default function MainDashboard() {
           </svg>
 
           {/* Math Subject Node - positioned at first right curve apex */}
-          <div className="path-node" style={{top: '100px', right: '0px'}}>
+          <div className="path-node" style={{top: '100px', right: '0px'}} onClick={() => navigate("/arte")}>
             <div className="subject-icon">
               <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none">
                 <text x="4" y="16" fontSize="14" fontWeight="bold" fill="#4E8F4E">+−</text>
@@ -821,16 +842,47 @@ export default function MainDashboard() {
 
         }
 
-        .mission-bar {
-          background: white;
-          height: 12px;
-          border-radius: 6px;
-          margin-bottom: 8px;
-        }
+.mission-bar {
+    background: white;
+    height: 30px; /* Esto hará que la altura sea fija, ajustaremos el padding */
+    border-radius: 6px;
+    margin-bottom: 8px;
+    
+    /* 🎯 Flexbox para alinear texto e icono */
+    display: flex;
+    align-items: center; /* Centrar verticalmente */
+    justify-content: space-between; /* Espacio entre el texto y el icono */
+    padding: 18px 20px; /* Ajusta el padding para que el contenido no quede pegado y la altura sea adecuada */
+    
+    box-shadow: 0px 7px 0px 0px #A9CEA7; /* Asegúrate de que esto siga ahí si lo deseas */
+    transition: background 0.2s ease-in-out; /* Para cuando esté completada */
+}
 
-        .mission-bar:last-child {
-          margin-bottom: 0;
-        }
+/* Estilo adicional para misiones completadas */
+.mission-bar.completed {
+    background-color: #e6ffe6; /* Un tono más claro de verde para indicar completado */
+    /* Opcional: cambiar el box-shadow si quieres que luzca diferente */
+    /* box-shadow: 0px 4px 0px 0px #8dc68c; */
+}
+
+
+.mission-text {
+    color: #0A6802; /* Color de texto más oscuro */
+    font-size: 18px; /* Texto más grande */
+    font-weight: 600;
+    margin: 0; /* Elimina márgenes por defecto */
+    flex-grow: 1; /* Permite que el texto ocupe el espacio disponible */
+    font-family: 'Mulish', sans-serif;
+}
+
+.mission-check-icon {
+    /* Estilos para el contenedor del SVG */
+    display: flex; /* Para asegurar que el SVG se centre si es más pequeño */
+    align-items: center;
+    justify-content: center;
+    margin-left: 10px; /* Espacio entre el texto y el icono */
+    color: #4CAF50; /* Color del icono */
+}
 
         .subjects-section {
           position: relative;

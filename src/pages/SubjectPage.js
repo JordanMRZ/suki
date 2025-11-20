@@ -1,10 +1,13 @@
 import { useState, useEffect } from "react"
 import { useParams, useNavigate } from "react-router-dom"
 import { getQuestions } from "../utils/questionsData.js"
+import { useChildData } from "../hooks/useChildData.js"
 
 export default function SubjectPage() {
   const { subjectId, level: levelFromParams } = useParams()
   const navigate = useNavigate()
+
+  const { updatePlayerXP, updateMissionProgress } = useChildData()
 
   const level = levelFromParams ? parseInt(levelFromParams) : 1
 
@@ -25,6 +28,7 @@ export default function SubjectPage() {
   const [index, setIndex] = useState(0)
   const [selected, setSelected] = useState(null)
   const [checked, setChecked] = useState(false)
+  const [score, setScore] = useState(0)
 
   useEffect(() => {
     const qs = getQuestions(subjectName, level)
@@ -32,6 +36,7 @@ export default function SubjectPage() {
   }, [subjectName, level])
 
   const current = questions[index]
+  const totalQuestions = questions.length
 
   if (!current) return <p>Cargando...</p>
 
@@ -43,19 +48,51 @@ export default function SubjectPage() {
   function handleCheck() {
     if (selected === null) return
 
-    const correct = selected === current.correctAnswer
     setChecked(true)
+
   }
 
-  function handleNext() {
-    if (index + 1 < questions.length) {
-      setIndex(index + 1)
-      setSelected(null)
-      setChecked(false)
-    } else {
-      navigate("/main")
+function handleNext() {
+    let finalScore = score;
+    
+    // 1. Verificar si la pregunta actual fue respondida y si fue correcta
+    if (checked && selected === current.correctAnswer) {
+        finalScore = score + 1; // Sumamos la respuesta correcta actual
     }
-  }
+
+    // 2. Si hay más preguntas, actualizamos el score y avanzamos
+    if (index + 1 < questions.length) {
+        setScore(finalScore); // Actualizamos el score para la siguiente pregunta
+        setIndex(index + 1);
+        setSelected(null);
+        setChecked(false);
+    } else {
+        // 3. FIN DEL CUESTIONARIO. Usamos el score final
+        const xpGained = finalScore * 10;
+
+        const updatePromises = [];
+
+        updatePromises.push(updatePlayerXP(xpGained));
+
+        updatePromises.push(updateMissionProgress(1, finalScore));
+
+        Promise.all(updatePromises)
+                .then(() => {
+                    navigate("/completado", { 
+                        state: { 
+                            correctCount: finalScore, 
+                            totalQuestions: questions.length,
+                            xpGained: xpGained // Mostrar XP de la lección
+                        } 
+                    });
+                })
+                .catch(error => {
+                    console.error("Error al finalizar lección y actualizar datos:", error);
+                });
+        
+
+    }
+}
 
   return (
     <div className="page-container">
@@ -119,7 +156,7 @@ export default function SubjectPage() {
       <style jsx>{`
         .page-container {
           background: #f2ffe9;
-          min-height: 100vh;
+          
           padding: 25px;
           display: flex;
           flex-direction: column;
@@ -256,7 +293,7 @@ export default function SubjectPage() {
         }
 
         .footer {
-          width: 90%;
+          width: 100%;
           display: flex;
           justify-content: center;
           margin-top: auto;
@@ -266,7 +303,7 @@ export default function SubjectPage() {
 
         .comprobar-btn {
           width: 100%;
-          max-width: 350px;
+          margin-top: 20px;
           background: #57A863;
           color: white;
           border: none;

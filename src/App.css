@@ -349,11 +349,3 @@ html, body {
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
-/* Footer */
-.footer {
-  background-color: #a8d5a8;
-  padding: 20px;
-  text-align: center;
-  color: #2d7a2d;
-  font-size: 16px;
-}
