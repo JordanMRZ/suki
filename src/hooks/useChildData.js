@@ -11,7 +11,7 @@ import { doc, getDoc, updateDoc } from 'firebase/firestore';
 const calculateRequiredXP = (levelNumber) => {
     // Ejemplo: Nivel 1 -> 100 XP. Nivel 2 -> 150 XP. Nivel 3 -> 200 XP.
     // Fórmula: 100 + (Nivel - 1) * 50
-    return 100 + (levelNumber - 1) * 50; 
+    return 60;
 };
 
 // ---------------------------------------------
@@ -28,9 +28,9 @@ export const useChildData = () => {
     const [childLevel, setChildLevel] = useState(1); // Usaremos un número para la lógica
     const [loading, setLoading] = useState(true);
     // 🎯 NUEVO ESTADO: XP acumulado en el nivel actual
-    const [currentXP, setCurrentXP] = useState(0); 
+    const [currentXP, setCurrentXP] = useState(0);
     // 🎯 XP requerido para subir al siguiente nivel
-    const [xpRequired, setXpRequired] = useState(calculateRequiredXP(1)); 
+    const [xpRequired, setXpRequired] = useState(calculateRequiredXP(1));
 
     const [activeMissions, setActiveMissions] = useState([]);
 

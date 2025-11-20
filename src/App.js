@@ -18,6 +18,7 @@ import AccesibilityPage from './pages/AccesibilityPage';
 import PccuentaPage from './pages/PanelControlCuenta';
 import CompletadoPage from './pages/CompletadoPage';
 import ArtePage from './pages/ArtePage';
+import ErrorPage from './pages/ErrorPage';
 import './App.css';
 
 function App() {
@@ -86,6 +87,7 @@ function App() {
                 <Route path="/paneldecontrolcuenta" element={<PccuentaPage />} />
                 <Route path="/completado" element={<CompletadoPage />} />
                 <Route path="/arte" element={<ArtePage />} />
+                <Route path="*" element={<ErrorPage />} />
               {/* Rutas adicionales se agregarán más adelante */}
             </Routes>
           </div>

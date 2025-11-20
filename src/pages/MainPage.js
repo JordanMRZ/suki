@@ -10,6 +10,7 @@ import monstruo6 from '../assets/monstruo-6.png'
 import { useNavigate } from "react-router-dom";
 import { useAuthStatus } from '../hooks/useAuthStatus'; 
 import { useChildData } from '../hooks/useChildData';
+import portadalenguaje from '../assets/portada-lenguaje2.png';
 
 
 export default function MainDashboard() {
@@ -342,11 +343,8 @@ export default function MainDashboard() {
           {/* Cube Subject Node - positioned at left curve apex */}
           <div className="path-node" style={{top: '290px', left: '0px'}} onClick={() => handleSubjectClick('lenguaje', 'Lenguaje')}>
             <div className="subject-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#FF6B9D" strokeWidth="2">
-                <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/>
-                <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
-                <line x1="12" y1="22.08" x2="12" y2="12"/>
-              </svg>
+                <img src={portadalenguaje} style={{width: "100px",
+      height: "auto",}}></img>
             </div>
              <div className="subject-title">Lenguaje</div>
           </div>
