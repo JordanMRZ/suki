@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import raccoon from "../assets/suki-landing-sombra.png";
+import { useNavigate } from "react-router-dom";
 
 export default function Welcome() {
   const [showNavbar, setShowNavbar] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -32,7 +34,7 @@ export default function Welcome() {
       {showNavbar && (
   <div className="navbar">
     <h1 className="navbar-logo">suki</h1>
-    <button className="primary2-button">Empieza ahora</button>
+    <button className="primary2-button" onClick={() => navigate("/register")}>Empieza ahora</button>
   </div>
 )}
 
@@ -61,8 +63,8 @@ export default function Welcome() {
 
         {/* Botones */}
         <div className="buttons-container">
-          <button className="primary-button">Empieza ahora</button>
-          <button className="secondary-button">Ya tengo una cuenta</button>
+          <button className="primary-button" onClick={() => navigate("/register")} >Empieza ahora</button>
+          <button className="secondary-button" onClick={() => navigate("/login")} >Ya tengo una cuenta</button>
         </div>
       </main>
 
@@ -336,7 +338,7 @@ Queremos que cada niño aprenda de forma divertida y accesible. En Suki creemos 
 
         .footer-wave {
           position: absolute;
-          top: -1px;
+          top: -1px;  
           left: 0;
           width: 100%;
         }

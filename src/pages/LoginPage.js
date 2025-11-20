@@ -1,7 +1,45 @@
 import React from "react";
+import { useState } from "react";
 import raccoon from "../assets/suki-login.png"; // Cambia este nombre por el tuyo (png o svg)
+import { useNavigate } from "react-router-dom";
+import { auth } from "../index.js"; // Asegúrate de que esta ruta sea correcta
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 export default function Login() {
+  const navigate = useNavigate();
+
+  // 1. Estados para manejar el formulario y mensajes de error
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  // 3. Función de inicio de sesión
+  const handleLogin = async (e) => {
+    e.preventDefault(); // Previene la recarga de la página por defecto del formulario
+    setError(null);
+    setLoading(true);
+
+    try {
+      // Llama a la función de Firebase para iniciar sesión
+      await signInWithEmailAndPassword(auth, email, password);
+      
+      // Si es exitoso, navega al dashboard (ruta "/main")
+      navigate("/main"); 
+      
+    } catch (firebaseError) {
+      setLoading(false);
+      // Muestra un mensaje de error amigable basado en el código de error de Firebase
+      console.error("Error al iniciar sesión:", firebaseError.code);
+      if (firebaseError.code === 'auth/user-not-found' || firebaseError.code === 'auth/wrong-password') {
+        setError("Correo o contraseña incorrectos. Por favor, verifica tus datos.");
+      } else if (firebaseError.code === 'auth/invalid-email') {
+        setError("El formato del correo electrónico es inválido.");
+      } else {
+        setError("Ocurrió un error al iniciar sesión. Intenta más tarde.");
+      }
+    }
+  };
   return (
     <div className="login-page">
       {/* Encabezado con mapache y título */}
@@ -33,12 +71,13 @@ export default function Login() {
       <div className="login-container">
         <h2>Inicio de sesión</h2>
 
-        <form>
+        <form onSubmit={handleLogin}>
+          {error && <p className="error-message" style={{color: 'red', textAlign: 'center'}}>{error}</p>}
           <div className="input-group">
             <label>Correo Electrónico</label>
             <div className="input-wrapper">
               <svg xmlns="http://www.w3.org/2000/svg" width="14" height="18" viewBox="0 0 14 18" fill="none"> <path d="M6.74999 8.99999C9.23527 8.99999 11.25 6.98527 11.25 4.49999C11.25 2.01472 9.23527 0 6.74999 0C4.26472 0 2.25 2.01472 2.25 4.49999C2.25 6.98527 4.26472 8.99999 6.74999 8.99999Z" fill="#758A73"/> <path d="M6.74999 10.5C3.02378 10.5041 0.00414843 13.5238 0 17.25C0 17.6642 0.335777 18 0.749987 18H12.75C13.1642 18 13.4999 17.6642 13.4999 17.25C13.4958 13.5238 10.4762 10.5041 6.74999 10.5Z" fill="#758A73"/> </svg>
-              <input type="email" placeholder="correo@gmail.com" required />
+              <input type="email" placeholder="correo@gmail.com" required value={email} onChange={(e) => setEmail(e.target.value)}/>
             </div>
           </div>
 
@@ -46,7 +85,7 @@ export default function Login() {
             <label>Contraseña</label>
             <div className="input-wrapper">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="19" viewBox="0 0 16 19" fill="none"> <path d="M13.4583 6.669V5.54167C13.4583 4.07193 12.8745 2.66238 11.8352 1.62312C10.796 0.583853 9.38641 0 7.91667 0C6.44693 0 5.03738 0.583853 3.99812 1.62312C2.95885 2.66238 2.375 4.07193 2.375 5.54167V6.669C1.66991 6.97673 1.06977 7.48325 0.647978 8.12663C0.226183 8.77 0.00101205 9.52235 0 10.2917V15.0417C0.00125705 16.0911 0.418698 17.0972 1.16076 17.8392C1.90282 18.5813 2.9089 18.9987 3.95833 19H11.875C12.9244 18.9987 13.9305 18.5813 14.6726 17.8392C15.4146 17.0972 15.8321 16.0911 15.8333 15.0417V10.2917C15.8323 9.52235 15.6072 8.77 15.1854 8.12663C14.7636 7.48325 14.1634 6.97673 13.4583 6.669ZM3.95833 5.54167C3.95833 4.49185 4.37537 3.48503 5.1177 2.7427C5.86003 2.00037 6.86685 1.58333 7.91667 1.58333C8.96648 1.58333 9.9733 2.00037 10.7156 2.7427C11.458 3.48503 11.875 4.49185 11.875 5.54167V6.33333H3.95833V5.54167ZM14.25 15.0417C14.25 15.6716 13.9998 16.2756 13.5544 16.721C13.109 17.1664 12.5049 17.4167 11.875 17.4167H3.95833C3.32844 17.4167 2.72435 17.1664 2.27895 16.721C1.83356 16.2756 1.58333 15.6716 1.58333 15.0417V10.2917C1.58333 9.66178 1.83356 9.05769 2.27895 8.61229C2.72435 8.16689 3.32844 7.91667 3.95833 7.91667H11.875C12.5049 7.91667 13.109 8.16689 13.5544 8.61229C13.9998 9.05769 14.25 9.66178 14.25 10.2917V15.0417Z" fill="#758A73"/> <path d="M7.91667 11.0833C7.7067 11.0833 7.50534 11.1667 7.35687 11.3151C7.20841 11.4636 7.125 11.665 7.125 11.8749V13.4583C7.125 13.6682 7.20841 13.8696 7.35687 14.018C7.50534 14.1665 7.7067 14.2499 7.91667 14.2499C8.12663 14.2499 8.32799 14.1665 8.47646 14.018C8.62493 13.8696 8.70833 13.6682 8.70833 13.4583V11.8749C8.70833 11.665 8.62493 11.4636 8.47646 11.3151C8.32799 11.1667 8.12663 11.0833 7.91667 11.0833Z" fill="#758A73"/> </svg>
-              <input type="password" placeholder="************" required />
+              <input type="password" placeholder="************" required value={password} onChange={(e) => setPassword(e.target.value)}/>
             </div>
           </div>
 
@@ -54,12 +93,12 @@ export default function Login() {
             ¿Olvidaste tu contraseña?
           </a>
 
-          <button type="submit" className="login-button">
-            Siguiente
+          <button type="submit" className="login-button" disabled={loading}>
+            {loading ? "Iniciando..." : "Siguiente"}
           </button>
 
           <p className="register-text">
-            No tienes cuenta? <a href="#">Regístrate</a>
+            No tienes cuenta? <a onClick={() => navigate("/register")}>Regístrate</a>
           </p>
         </form>
       </div>

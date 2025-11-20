@@ -1,7 +1,74 @@
 import React from "react";
+import suki from "../assets/suki-landing-sombra.png";
 import lado from '../assets/gemini-suki-lado.png'
+import monstruo1 from '../assets/monstruo-1.png'
+import monstruo2 from '../assets/monstruo-2.png'
+import monstruo3 from '../assets/monstruo-3.png'
+import monstruo4 from '../assets/monstruo-4.png'
+import monstruo5 from '../assets/monstruo-5.png'
+import monstruo6 from '../assets/monstruo-6.png'
+import { useNavigate } from "react-router-dom";
+import { useAuthStatus } from '../hooks/useAuthStatus'; 
+import { useChildData } from '../hooks/useChildData';
 
 export default function MainDashboard() {
+  const navigate = useNavigate();
+  const { loggedIn, checkingStatus } = useAuthStatus(); 
+  const { childName, childLevel, loading, xpPercentage } = useChildData();
+
+  const currentXpPercentage = xpPercentage ? `${xpPercentage}%` : '0%';
+
+  const levelNumber = childLevel.replace('lv ', '').trim();
+
+  const handleSubjectClick = (subjectId) => {
+      
+        // 2. Navegar después de un pequeño retraso
+        setTimeout(() => {
+            navigate(`/subject/${subjectId}/${levelNumber}`);
+        }, 700);
+    };
+
+  if (checkingStatus || loading) {
+    // Muestra un spinner o pantalla de carga mientras se verifican ambos estados
+    return <div
+  className="loading-screen"
+  style={{
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    height: "100vh",
+    background: "#F5FFF2",
+    fontFamily: "Mulish, sans-serif",
+  }}
+>
+  <img
+    src={suki}
+    alt="Suki"
+    style={{
+      width: "200px",
+      height: "auto",
+      marginBottom: "20px",
+    }}
+  />
+
+  <h1
+    style={{
+      fontSize: "42px",
+      fontWeight: "700",
+      color: "#4E8F4E",
+    }}
+  >
+    Cargando Suki...
+  </h1>
+</div>; 
+  }
+
+  if (!loggedIn) {
+    // Redirección si la verificación de Auth falla
+    navigate("/login"); 
+    return null; 
+  }
   return (
     <div className="dashboard-page">
       {/* Top Navigation Bar */}
@@ -11,7 +78,7 @@ export default function MainDashboard() {
           <path d="M0.375174 16.7567C1.14296 18.0932 2.84566 18.5523 4.17822 17.7823C4.17914 17.7818 4.18001 17.7813 4.18092 17.7807L4.59397 17.5415C5.37368 18.2105 6.26991 18.7294 7.23754 19.0719V19.5495C7.23754 21.0919 8.4843 22.3423 10.0222 22.3423C11.5601 22.3423 12.8069 21.0919 12.8069 19.5495V19.072C13.7747 18.7288 14.6709 18.2094 15.4505 17.5396L15.8654 17.7798C17.1983 18.551 18.9022 18.0926 19.6711 16.7558C20.4401 15.419 19.983 13.7102 18.6501 12.939L18.2379 12.7006C18.4235 11.6882 18.4235 10.6503 18.2379 9.63787L18.6501 9.39957C19.9829 8.62837 20.4401 6.91953 19.6711 5.58274C18.9022 4.246 17.1983 3.7875 15.8654 4.55871L15.4524 4.79797C14.6719 4.12975 13.775 3.61186 12.8069 3.27036V2.79279C12.8069 1.25038 11.5601 0 10.0222 0C8.4843 0 7.23754 1.25038 7.23754 2.79279V3.27036C6.26978 3.61348 5.3735 4.13294 4.59397 4.80268L4.17905 4.56159C2.84614 3.79034 1.14227 4.24884 0.373303 5.58558C-0.39566 6.92232 0.0614626 8.6312 1.39437 9.40241L1.8065 9.64071C1.62097 10.6531 1.62097 11.691 1.8065 12.7035L1.39437 12.9418C0.0651611 13.715 -0.390482 15.4206 0.375174 16.7567ZM10.0222 7.44745C12.0728 7.44745 13.7351 9.11462 13.7351 11.1712C13.7351 13.2277 12.0728 14.8949 10.0222 14.8949C7.97165 14.8949 6.30933 13.2277 6.30933 11.1712C6.30933 9.11462 7.97165 7.44745 10.0222 7.44745Z" fill="white"/>
           </svg>
         </button>
-        <button className="nav-button accessibility">
+        <button className="nav-button accessibility" onClick={() => navigate("/Accessibility")}>
         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22"><path fill="currentColor" fill-rule="evenodd" d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2S2 6.477 2 12s4.477 10 10 10m0-13a2 2 0 1 0 0-4a2 2 0 0 0 0 4m-5.707.31a.75.75 0 0 0-.586 1.38l.002.001l.002.001l.01.004l.032.014a15 15 0 0 0 .572.225c.38.145.914.338 1.527.53c.988.312 2.236.64 3.398.748v1.24c0 .43-.124.853-.357 1.216l-2.524 3.925a.75.75 0 0 0 1.262.812l2.37-3.686l2.368 3.686a.75.75 0 0 0 1.262-.812l-2.524-3.925a2.25 2.25 0 0 1-.357-1.217v-1.239c1.162-.108 2.41-.436 3.399-.748a28 28 0 0 0 2.098-.755l.033-.014l.01-.004l.002-.001a.75.75 0 0 0-.585-1.381l-.007.003l-.027.011l-.11.045q-.148.061-.42.164c-.36.137-.865.32-1.444.502c-1.178.37-2.588.715-3.699.715s-2.52-.345-3.698-.715a27 27 0 0 1-1.974-.711L6.3 9.313z" clip-rule="evenodd"/></svg>
           Accesibilidad
         </button>
@@ -35,13 +102,19 @@ export default function MainDashboard() {
       {/* User Profile Section */}
       <div className="user-profile">
         <div className="xpbar">
-        <div className="avatar">
-          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="#4E8F4E">
-            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
-          </svg>
+          <div 
+          className="xp-progress" 
+          style={{ width: currentXpPercentage }} 
+        />
+        <div className="xpbar-content">
+          <div className="avatar">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="#4E8F4E">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+            </svg>
+          </div>
+          <span className="user-name">{childName}</span>
+          <span className="user-level">{childLevel}</span>
         </div>
-        <span className="user-name">Mariana</span>
-        <span className="user-level">lv 1</span>
         </div>
       </div>
 
@@ -98,8 +171,39 @@ export default function MainDashboard() {
                 <text x="4" y="8" fontSize="14" fontWeight="bold" fill="#4E8F4E">×÷</text>
               </svg>
             </div>
-            <div className="subject-title">Lenguaje</div>
+            <div className="subject-title">Arte</div>
           </div>
+
+           <div className="path-node" style={{top: '110px', right: '220px'}}>
+              <img src={monstruo1} className="monstruo1" />
+          </div>
+
+           <div className="path-node" style={{top: '40px', right: '80px'}}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="58" height="84" viewBox="0 0 58 84" fill="none">
+            <path d="M18.0198 10.9087C17.9895 9.76638 19.5898 9.47485 19.9642 10.5545L22.4688 17.7752C22.5941 18.1366 22.9146 18.3948 23.2943 18.4404L28.6505 19.0834C29.6457 19.2029 29.8658 20.5494 28.9604 20.9795L24.0904 23.2929C23.7434 23.4577 23.5216 23.8066 23.5194 24.1907L23.4798 31.4334C23.4736 32.5675 21.8829 32.8171 21.5296 31.7395L19.2847 24.8929C19.1636 24.5236 18.8395 24.2579 18.4537 24.2116L13.1094 23.57C12.1141 23.4505 11.894 22.104 12.7995 21.6739L17.6491 19.3702C18.0065 19.2004 18.2302 18.8359 18.2197 18.4404L18.0198 10.9087Z" fill="white"/>
+            <path d="M34.4635 26.4074C34.9447 25.3818 36.4915 25.8207 36.3623 26.9462L34.1613 46.12C34.1175 46.5018 34.2962 46.8748 34.6212 47.0798L45.8917 54.1901C46.7522 54.733 46.3466 56.0645 45.3296 56.0354L32.0124 55.6552C31.6266 55.6442 31.269 55.8561 31.0934 56.1997L22.7468 72.5327C22.2354 73.5335 20.7169 73.0599 20.865 71.9458L23.2747 53.8293C23.3262 53.442 23.1475 53.0601 22.817 52.8517L11.5572 45.7482C10.6966 45.2053 11.1022 43.8738 12.1193 43.9028L25.4126 44.2823C25.8106 44.2937 26.1774 44.0679 26.3465 43.7075L34.4635 26.4074Z" fill="white"/>
+            </svg>
+          </div>
+
+          
+           <div className="path-node" style={{top: '60px', right: '0px'}}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="47" height="54" viewBox="0 0 47 54" fill="none">
+            <ellipse cx="19" cy="18.5" rx="19" ry="18.5" fill="url(#paint0_linear_353_62)"/>
+            <ellipse cx="38" cy="45.5" rx="9" ry="8.5" fill="url(#paint1_linear_353_62)"/>
+            <defs>
+            <linearGradient id="paint0_linear_353_62" x1="19" y1="0" x2="19" y2="37" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#DBFFD8"/>
+            <stop offset="1" stop-color="#F3FFF4"/>
+            </linearGradient>
+            <linearGradient id="paint1_linear_353_62" x1="38" y1="37" x2="38" y2="54" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#DBFFD8"/>
+            <stop offset="1" stop-color="#F3FFF4"/>
+            </linearGradient>
+            </defs>
+            </svg>
+          </div>
+
+
 
           <div className="path-node" style={{top: '190px', right: '160px'}}>
           <svg xmlns="http://www.w3.org/2000/svg" width="215" height="112" viewBox="0 0 215 112" fill="none">
@@ -215,7 +319,7 @@ export default function MainDashboard() {
 
 
           {/* Cube Subject Node - positioned at left curve apex */}
-          <div className="path-node" style={{top: '290px', left: '0px'}}>
+          <div className="path-node" style={{top: '290px', left: '0px'}} onClick={() => handleSubjectClick('lenguaje', 'Lenguaje')}>
             <div className="subject-icon">
               <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#FF6B9D" strokeWidth="2">
                 <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/>
@@ -223,7 +327,18 @@ export default function MainDashboard() {
                 <line x1="12" y1="22.08" x2="12" y2="12"/>
               </svg>
             </div>
-             <div className="subject-title">Matematicas</div>
+             <div className="subject-title">Lenguaje</div>
+          </div>
+
+          <div className="path-node" style={{top: '350px', right: '10px'}}>
+              <img src={monstruo2} className="monstruo1" />
+          </div>
+
+          <div className="path-node" style={{top: '450px', right: '160px'}}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="58" height="84" viewBox="0 0 58 84" fill="none">
+            <path d="M18.0198 10.9087C17.9895 9.76638 19.5898 9.47485 19.9642 10.5545L22.4688 17.7752C22.5941 18.1366 22.9146 18.3948 23.2943 18.4404L28.6505 19.0834C29.6457 19.2029 29.8658 20.5494 28.9604 20.9795L24.0904 23.2929C23.7434 23.4577 23.5216 23.8066 23.5194 24.1907L23.4798 31.4334C23.4736 32.5675 21.8829 32.8171 21.5296 31.7395L19.2847 24.8929C19.1636 24.5236 18.8395 24.2579 18.4537 24.2116L13.1094 23.57C12.1141 23.4505 11.894 22.104 12.7995 21.6739L17.6491 19.3702C18.0065 19.2004 18.2302 18.8359 18.2197 18.4404L18.0198 10.9087Z" fill="white"/>
+            <path d="M34.4635 26.4074C34.9447 25.3818 36.4915 25.8207 36.3623 26.9462L34.1613 46.12C34.1175 46.5018 34.2962 46.8748 34.6212 47.0798L45.8917 54.1901C46.7522 54.733 46.3466 56.0645 45.3296 56.0354L32.0124 55.6552C31.6266 55.6442 31.269 55.8561 31.0934 56.1997L22.7468 72.5327C22.2354 73.5335 20.7169 73.0599 20.865 71.9458L23.2747 53.8293C23.3262 53.442 23.1475 53.0601 22.817 52.8517L11.5572 45.7482C10.6966 45.2053 11.1022 43.8738 12.1193 43.9028L25.4126 44.2823C25.8106 44.2937 26.1774 44.0679 26.3465 43.7075L34.4635 26.4074Z" fill="white"/>
+            </svg>
           </div>
 
           <div className="path-node" style={{top: '410px', left: '150px'}}>
@@ -361,7 +476,11 @@ export default function MainDashboard() {
                 <rect x="10" y="14" width="4" height="8" fill="#8B4513"/>
               </svg>
             </div>
-             <div className="subject-title">Arte</div>
+             <div className="subject-title">Naturales</div>
+          </div>
+
+          <div className="path-node" style={{top: '510px', right: '215px'}}>
+              <img src={monstruo3} className="monstruo1" />
           </div>
 
           <div className="path-node" style={{top: '600px', right: '160px'}}>
@@ -373,6 +492,25 @@ export default function MainDashboard() {
           </svg>
           </div>
 
+          <div className="path-node" style={{top: '650px', right: '100px'}}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="58" height="84" viewBox="0 0 58 84" fill="none">
+            <path d="M18.0198 10.9087C17.9895 9.76638 19.5898 9.47485 19.9642 10.5545L22.4688 17.7752C22.5941 18.1366 22.9146 18.3948 23.2943 18.4404L28.6505 19.0834C29.6457 19.2029 29.8658 20.5494 28.9604 20.9795L24.0904 23.2929C23.7434 23.4577 23.5216 23.8066 23.5194 24.1907L23.4798 31.4334C23.4736 32.5675 21.8829 32.8171 21.5296 31.7395L19.2847 24.8929C19.1636 24.5236 18.8395 24.2579 18.4537 24.2116L13.1094 23.57C12.1141 23.4505 11.894 22.104 12.7995 21.6739L17.6491 19.3702C18.0065 19.2004 18.2302 18.8359 18.2197 18.4404L18.0198 10.9087Z" fill="white"/>
+            <path d="M34.4635 26.4074C34.9447 25.3818 36.4915 25.8207 36.3623 26.9462L34.1613 46.12C34.1175 46.5018 34.2962 46.8748 34.6212 47.0798L45.8917 54.1901C46.7522 54.733 46.3466 56.0645 45.3296 56.0354L32.0124 55.6552C31.6266 55.6442 31.269 55.8561 31.0934 56.1997L22.7468 72.5327C22.2354 73.5335 20.7169 73.0599 20.865 71.9458L23.2747 53.8293C23.3262 53.442 23.1475 53.0601 22.817 52.8517L11.5572 45.7482C10.6966 45.2053 11.1022 43.8738 12.1193 43.9028L25.4126 44.2823C25.8106 44.2937 26.1774 44.0679 26.3465 43.7075L34.4635 26.4074Z" fill="white"/>
+            </svg>
+          </div>
+
+           <div className="path-node" style={{top: '605px', right: '130px'}}>
+          <svg xmlns="http://www.w3.org/2000/svg" width="38" height="37" viewBox="0 0 38 37" fill="none">
+          <ellipse cx="19" cy="18.5" rx="19" ry="18.5" fill="url(#paint0_linear_353_63)"/>
+          <defs>
+          <linearGradient id="paint0_linear_353_63" x1="19" y1="0" x2="19" y2="37" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#DBFFD8"/>
+          <stop offset="1" stop-color="#F3FFF4"/>
+          </linearGradient>
+          </defs>
+          </svg>
+          </div>
+
 
           {/* Book Subject Node - positioned at left curve apex */}
           <div className="path-node" style={{top: '700px', left: '0px'}}>
@@ -381,7 +519,30 @@ export default function MainDashboard() {
                 <path d="M4 19.5A2.5 2.5 0 016.5 17H20v-2H6.5A2.5 2.5 0 004 17.5V19.5zM6.5 3A2.5 2.5 0 004 5.5v10A2.5 2.5 0 006.5 13H20V3H6.5z"/>
               </svg>
             </div>
-             <div className="subject-title">Naturales</div>
+             <div className="subject-title">Sociales</div>
+          </div>
+
+          <div className="path-node" style={{top: '750px', right: '10px'}}>
+              <img src={monstruo5} className="monstruo1" />
+          </div>
+
+          <div className="path-node" style={{top: '750px', right: '325px'}}>
+          <svg xmlns="http://www.w3.org/2000/svg" width="38" height="37" viewBox="0 0 38 37" fill="none">
+          <ellipse cx="19" cy="18.5" rx="19" ry="18.5" fill="url(#paint0_linear_353_63)"/>
+          <defs>
+          <linearGradient id="paint0_linear_353_63" x1="19" y1="0" x2="19" y2="37" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#DBFFD8"/>
+          <stop offset="1" stop-color="#F3FFF4"/>
+          </linearGradient>
+          </defs>
+          </svg>
+          </div>
+
+          <div className="path-node" style={{top: '850px', right: '150px'}}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="58" height="84" viewBox="0 0 58 84" fill="none">
+            <path d="M18.0198 10.9087C17.9895 9.76638 19.5898 9.47485 19.9642 10.5545L22.4688 17.7752C22.5941 18.1366 22.9146 18.3948 23.2943 18.4404L28.6505 19.0834C29.6457 19.2029 29.8658 20.5494 28.9604 20.9795L24.0904 23.2929C23.7434 23.4577 23.5216 23.8066 23.5194 24.1907L23.4798 31.4334C23.4736 32.5675 21.8829 32.8171 21.5296 31.7395L19.2847 24.8929C19.1636 24.5236 18.8395 24.2579 18.4537 24.2116L13.1094 23.57C12.1141 23.4505 11.894 22.104 12.7995 21.6739L17.6491 19.3702C18.0065 19.2004 18.2302 18.8359 18.2197 18.4404L18.0198 10.9087Z" fill="white"/>
+            <path d="M34.4635 26.4074C34.9447 25.3818 36.4915 25.8207 36.3623 26.9462L34.1613 46.12C34.1175 46.5018 34.2962 46.8748 34.6212 47.0798L45.8917 54.1901C46.7522 54.733 46.3466 56.0645 45.3296 56.0354L32.0124 55.6552C31.6266 55.6442 31.269 55.8561 31.0934 56.1997L22.7468 72.5327C22.2354 73.5335 20.7169 73.0599 20.865 71.9458L23.2747 53.8293C23.3262 53.442 23.1475 53.0601 22.817 52.8517L11.5572 45.7482C10.6966 45.2053 11.1022 43.8738 12.1193 43.9028L25.4126 44.2823C25.8106 44.2937 26.1774 44.0679 26.3465 43.7075L34.4635 26.4074Z" fill="white"/>
+            </svg>
           </div>
 
           <div className="path-node" style={{top: '800px', left: '170px'}}>
@@ -402,7 +563,18 @@ export default function MainDashboard() {
                 <path d="M5 3v18M5 5h12l-2 4 2 4H5"/>
               </svg>
             </div>
-             <div className="subject-title">Sociales</div>
+             <div className="subject-title">Matematicas</div>
+          </div>
+
+          <div className="path-node" style={{top: '950px', right: '210px'}}>
+              <img src={monstruo4} className="monstruo1" />
+          </div>
+
+          <div className="path-node" style={{top: '1040px', right: '100px'}}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="58" height="84" viewBox="0 0 58 84" fill="none">
+            <path d="M18.0198 10.9087C17.9895 9.76638 19.5898 9.47485 19.9642 10.5545L22.4688 17.7752C22.5941 18.1366 22.9146 18.3948 23.2943 18.4404L28.6505 19.0834C29.6457 19.2029 29.8658 20.5494 28.9604 20.9795L24.0904 23.2929C23.7434 23.4577 23.5216 23.8066 23.5194 24.1907L23.4798 31.4334C23.4736 32.5675 21.8829 32.8171 21.5296 31.7395L19.2847 24.8929C19.1636 24.5236 18.8395 24.2579 18.4537 24.2116L13.1094 23.57C12.1141 23.4505 11.894 22.104 12.7995 21.6739L17.6491 19.3702C18.0065 19.2004 18.2302 18.8359 18.2197 18.4404L18.0198 10.9087Z" fill="white"/>
+            <path d="M34.4635 26.4074C34.9447 25.3818 36.4915 25.8207 36.3623 26.9462L34.1613 46.12C34.1175 46.5018 34.2962 46.8748 34.6212 47.0798L45.8917 54.1901C46.7522 54.733 46.3466 56.0645 45.3296 56.0354L32.0124 55.6552C31.6266 55.6442 31.269 55.8561 31.0934 56.1997L22.7468 72.5327C22.2354 73.5335 20.7169 73.0599 20.865 71.9458L23.2747 53.8293C23.3262 53.442 23.1475 53.0601 22.817 52.8517L11.5572 45.7482C10.6966 45.2053 11.1022 43.8738 12.1193 43.9028L25.4126 44.2823C25.8106 44.2937 26.1774 44.0679 26.3465 43.7075L34.4635 26.4074Z" fill="white"/>
+            </svg>
           </div>
 
           <div className="path-node" style={{top: '1000px', right: '160px'}}>
@@ -426,7 +598,30 @@ export default function MainDashboard() {
                 <circle cx="14" cy="13" r="1" fill="white"/>
               </svg>
             </div>
-             <div className="subject-title">Fisica</div>
+             <div className="subject-title">Vida Practica</div>
+          </div>
+
+          <div className="path-node" style={{top: '1220px', right: '-10px'}}>
+              <img src={monstruo6} className="monstruo1" />
+          </div>
+
+          <div className="path-node" style={{top: '1205px', right: '140px'}}>
+          <svg xmlns="http://www.w3.org/2000/svg" width="38" height="37" viewBox="0 0 38 37" fill="none">
+          <ellipse cx="19" cy="18.5" rx="19" ry="18.5" fill="url(#paint0_linear_353_63)"/>
+          <defs>
+          <linearGradient id="paint0_linear_353_63" x1="19" y1="0" x2="19" y2="37" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#DBFFD8"/>
+          <stop offset="1" stop-color="#F3FFF4"/>
+          </linearGradient>
+          </defs>
+          </svg>
+          </div>
+
+          <div className="path-node" style={{top: '1240px', right: '140px'}}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="58" height="84" viewBox="0 0 58 84" fill="none">
+            <path d="M18.0198 10.9087C17.9895 9.76638 19.5898 9.47485 19.9642 10.5545L22.4688 17.7752C22.5941 18.1366 22.9146 18.3948 23.2943 18.4404L28.6505 19.0834C29.6457 19.2029 29.8658 20.5494 28.9604 20.9795L24.0904 23.2929C23.7434 23.4577 23.5216 23.8066 23.5194 24.1907L23.4798 31.4334C23.4736 32.5675 21.8829 32.8171 21.5296 31.7395L19.2847 24.8929C19.1636 24.5236 18.8395 24.2579 18.4537 24.2116L13.1094 23.57C12.1141 23.4505 11.894 22.104 12.7995 21.6739L17.6491 19.3702C18.0065 19.2004 18.2302 18.8359 18.2197 18.4404L18.0198 10.9087Z" fill="white"/>
+            <path d="M34.4635 26.4074C34.9447 25.3818 36.4915 25.8207 36.3623 26.9462L34.1613 46.12C34.1175 46.5018 34.2962 46.8748 34.6212 47.0798L45.8917 54.1901C46.7522 54.733 46.3466 56.0645 45.3296 56.0354L32.0124 55.6552C31.6266 55.6442 31.269 55.8561 31.0934 56.1997L22.7468 72.5327C22.2354 73.5335 20.7169 73.0599 20.865 71.9458L23.2747 53.8293C23.3262 53.442 23.1475 53.0601 22.817 52.8517L11.5572 45.7482C10.6966 45.2053 11.1022 43.8738 12.1193 43.9028L25.4126 44.2823C25.8106 44.2937 26.1774 44.0679 26.3465 43.7075L34.4635 26.4074Z" fill="white"/>
+            </svg>
           </div>
 
           <div className="path-node" style={{top: '1250px', left: '180px'}}>
@@ -445,8 +640,8 @@ export default function MainDashboard() {
       <div className="achievements-section">
         <div className="achievement-header">
         <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60" fill="none">
-        <path d="M55 20.4049V20.5874C55 22.7374 55 23.8149 54.4825 24.6949C53.965 25.5749 53.0225 26.0974 51.1425 27.1449L49.16 28.2449C50.525 23.6249 50.9825 18.6599 51.15 14.4149L51.175 13.8624L51.18 13.7324C52.8075 14.2974 53.7225 14.7199 54.2925 15.5099C55 16.4924 55 17.7974 55 20.4049ZM5 20.4049V20.5874C5 22.7374 5 23.8149 5.5175 24.6949C6.035 25.5749 6.9775 26.0974 8.8575 27.1449L10.8425 28.2449C9.475 23.6249 9.0175 18.6599 8.85 14.4149L8.825 13.8624L8.8225 13.7324C7.1925 14.2974 6.2775 14.7199 5.7075 15.5099C5 16.4924 5 17.7999 5 20.4049Z" fill="#E8CF46"/>
-        <path fill-rule="evenodd" clip-rule="evenodd" d="M40.9425 5.86758C37.3254 5.27507 33.6653 4.9849 30 5.00008C25.5425 5.00008 21.8675 5.39258 19.0575 5.86758C16.21 6.34758 14.7875 6.58758 13.5975 8.05258C12.41 9.51758 12.4725 11.1001 12.5975 14.2651C13.03 25.1351 15.375 38.7151 28.125 39.9151V48.7501H24.55C23.9723 48.7504 23.4125 48.9509 22.9658 49.3173C22.5192 49.6837 22.2132 50.1936 22.1 50.7601L21.625 53.1251H15C14.5027 53.1251 14.0258 53.3226 13.6742 53.6743C13.3225 54.0259 13.125 54.5028 13.125 55.0001C13.125 55.4974 13.3225 55.9743 13.6742 56.3259C14.0258 56.6775 14.5027 56.8751 15 56.8751H45C45.4973 56.8751 45.9742 56.6775 46.3258 56.3259C46.6775 55.9743 46.875 55.4974 46.875 55.0001C46.875 54.5028 46.6775 54.0259 46.3258 53.6743C45.9742 53.3226 45.4973 53.1251 45 53.1251H38.375L37.9 50.7601C37.7868 50.1936 37.4808 49.6837 37.0342 49.3173C36.5875 48.9509 36.0277 48.7504 35.45 48.7501H31.875V39.9151C44.625 38.7151 46.9725 25.1376 47.4025 14.2651C47.5275 11.1001 47.5925 9.51508 46.4025 8.05258C45.2125 6.58758 43.79 6.34758 40.9425 5.86758Z" fill="#E8CF46"/>
+        <path d="M55 20.4049V20.5874C55 22.7374 55 23.8149 54.4825 24.6949C53.965 25.5749 53.0225 26.0974 51.1425 27.1449L49.16 28.2449C50.525 23.6249 50.9825 18.6599 51.15 14.4149L51.175 13.8624L51.18 13.7324C52.8075 14.2974 53.7225 14.7199 54.2925 15.5099C55 16.4924 55 17.7974 55 20.4049ZM5 20.4049V20.5874C5 22.7374 5 23.8149 5.5175 24.6949C6.035 25.5749 6.9775 26.0974 8.8575 27.1449L10.8425 28.2449C9.475 23.6249 9.0175 18.6599 8.85 14.4149L8.825 13.8624L8.8225 13.7324C7.1925 14.2974 6.2775 14.7199 5.7075 15.5099C5 16.4924 5 17.7999 5 20.4049Z" fill="#FFE345"/>
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M40.9425 5.86758C37.3254 5.27507 33.6653 4.9849 30 5.00008C25.5425 5.00008 21.8675 5.39258 19.0575 5.86758C16.21 6.34758 14.7875 6.58758 13.5975 8.05258C12.41 9.51758 12.4725 11.1001 12.5975 14.2651C13.03 25.1351 15.375 38.7151 28.125 39.9151V48.7501H24.55C23.9723 48.7504 23.4125 48.9509 22.9658 49.3173C22.5192 49.6837 22.2132 50.1936 22.1 50.7601L21.625 53.1251H15C14.5027 53.1251 14.0258 53.3226 13.6742 53.6743C13.3225 54.0259 13.125 54.5028 13.125 55.0001C13.125 55.4974 13.3225 55.9743 13.6742 56.3259C14.0258 56.6775 14.5027 56.8751 15 56.8751H45C45.4973 56.8751 45.9742 56.6775 46.3258 56.3259C46.6775 55.9743 46.875 55.4974 46.875 55.0001C46.875 54.5028 46.6775 54.0259 46.3258 53.6743C45.9742 53.3226 45.4973 53.1251 45 53.1251H38.375L37.9 50.7601C37.7868 50.1936 37.4808 49.6837 37.0342 49.3173C36.5875 48.9509 36.0277 48.7504 35.45 48.7501H31.875V39.9151C44.625 38.7151 46.9725 25.1376 47.4025 14.2651C47.5275 11.1001 47.5925 9.51508 46.4025 8.05258C45.2125 6.58758 43.79 6.34758 40.9425 5.86758Z" fill="#FFE345"/>
         </svg>
           <h3>Logros</h3>
         </div>
@@ -459,7 +654,7 @@ export default function MainDashboard() {
       {/* Control Panel Section */}
       <div className="control-panel-section">
         <h3>Panel de control</h3>
-        <button className="control-panel-button">
+        <button className="control-panel-button" onClick={() => navigate("/paneldecontrolcuenta")}>
           Ir al panel de control
         </button>
       </div>
@@ -470,6 +665,7 @@ export default function MainDashboard() {
         html{
             
         }
+
         .dashboard-page {
           background-color: #F5FFF2;
           min-height: 100vh;
@@ -528,25 +724,52 @@ export default function MainDashboard() {
         }
 
         .user-profile {
-          background: #C9F9B9;
+          background: #C9F9B9; /* El color de borde externo */
           border-radius: 38.5px;
           padding: 5px;
           display: flex;
-          align-items: center;
+          /* Reducimos margins si es necesario, pero la estructura Flex es importante */
           margin-left: 25px;
           margin-right: 25px;
           margin-bottom: 20px;
-          
-        }
-        
-        .xpbar{
-          display: flex;
-          background: white;
+          position: relative; /* Importante para que el contenido de .xpbar-content quede bien */
+      }
+
+      .xpbar {
+          /* El fondo de la barra, que representa el 100% del nivel */
+          width: 100%; 
+          height: 60px; /* Le damos una altura fija para que se note la barra */
+          background: #C9F9B9; 
           border-radius: 38.5px;
-          padding: 12px 20px;
+          padding: 0; /* Quitamos el padding aquí */
+          position: relative; /* ¡CLAVE! Permite posicionar los elementos internos */
+          overflow: hidden; /* Oculta cualquier parte de .xp-progress que se desborde */
+      }
+
+      .xp-progress {
+          /* ESTE ES EL INDICADOR DE PROGRESO QUE CRECERÁ */
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 100%;
+          background-color: #fff; /* Un color de progreso suave */
+          transition: width 0.5s ease-in-out; /* Animación de crecimiento */
+          /* width: 0% - 100% (Se asigna en línea en el JSX) */
+      }
+
+      .xpbar-content {
+          /* Este contenedor mantiene la foto, nombre y nivel */
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          display: flex; /* Mantenemos el diseño interno con flex */
           align-items: center;
-          gap: 12px;
-        }
+          justify-content: space-between; /* Ajustamos la distribución */
+          padding: 0 20px; /* Padding interno para que no se pegue a los bordes */
+          z-index: 10; /* Asegura que se vea sobre la barra de progreso */
+      }
 
         .avatar {
           width: 40px;
@@ -556,6 +779,7 @@ export default function MainDashboard() {
           display: flex;
           align-items: center;
           justify-content: center;
+          margin-right: 12px;
         }
 
         .user-name {
@@ -563,15 +787,18 @@ export default function MainDashboard() {
           font-size: 18px;
           color: #224420;
           flex: 1;
+          flex-grow: 1;
         }
 
         .user-level {
           background-color: #C8E6C9;
           padding: 6px 16px;
+          margin-right: 35px;
           border-radius: 15px;
           font-weight: 700;
           color: #224420;
           font-size: 14px;
+          flex-shrink: 0;
         }
 
         .daily-missions {
@@ -664,7 +891,6 @@ export default function MainDashboard() {
 
         .path-node {
           position: absolute;
-          z-index: 2;
         }
         
 
@@ -692,8 +918,13 @@ export default function MainDashboard() {
           font-family: 'Quicksand', sans-serif;
         }
 
-        /* Added CSS-based monster character styles */
-       
+        .monstruo1 {
+          position: relative;
+          width: 120px;
+          height: auto;
+          z-index: 9999;
+        }
+
 
         .achievements-section {
           background: white;

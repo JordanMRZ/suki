@@ -1,6 +1,6 @@
 // Datos de preguntas para cada materia
 export const questionsData = {
-  '1. Ética y Valores': [
+  'Ética y Valores': [
     // Nivel 1
     {
       id: 1,
@@ -4058,32 +4058,32 @@ export const questionsData = {
 };
 
   // Función para obtener preguntas de una materia y nivel específicos
-  export const getQuestions = (subject, level) => {
-    const subjectQuestions = questionsData[subject];
-    if (!subjectQuestions) return [];
-    
-    return subjectQuestions.filter(q => q.level === level);
-  };
+export const getQuestions = (subject, level) => {
+  const subjectQuestions = questionsData[subject]
+  if (!subjectQuestions) return []
 
-  // Función para obtener una pregunta aleatoria de una materia y nivel
-  export const getRandomQuestion = (subject, level) => {
-    const questions = getQuestions(subject, level);
-    if (questions.length === 0) return null;
-    
-    const randomIndex = Math.floor(Math.random() * questions.length);
-    return questions[randomIndex];
-  };
+  return subjectQuestions.filter((q) => q.level === level)
+}
 
-  // Función para obtener todas las preguntas de una materia
-  export const getAllSubjectQuestions = (subject) => {
-    return questionsData[subject] || [];
-  };
+// Función para obtener una pregunta aleatoria de una materia y nivel
+export const getRandomQuestion = (subject, level) => {
+  const questions = getQuestions(subject, level)
+  if (questions.length === 0) return null
 
-  // Función para obtener el número total de niveles de una materia
-  export const getTotalLevels = (subject) => {
-    const subjectQuestions = questionsData[subject];
-    if (!subjectQuestions) return 0;
-    
-    const levels = subjectQuestions.map(q => q.level);
-    return Math.max(...levels);
-  };
+  const randomIndex = Math.floor(Math.random() * questions.length)
+  return questions[randomIndex]
+}
+
+// Función para obtener todas las preguntas de una materia
+export const getAllSubjectQuestions = (subject) => {
+  return questionsData[subject] || []
+}
+
+// Función para obtener el número total de niveles de una materia
+export const getTotalLevels = (subject) => {
+  const subjectQuestions = questionsData[subject]
+  if (!subjectQuestions) return 0
+
+  const levels = subjectQuestions.map((q) => q.level)
+  return Math.max(...levels)
+}
