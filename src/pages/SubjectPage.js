@@ -1,66 +1,59 @@
-import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import { useAccessibility } from "../context/AccessibilityContext";
-import { useUser } from "../context/UserContext";
-import { getQuestions } from "../utils/questionsData";
+import { useState, useEffect } from "react"
+import { useParams, useNavigate } from "react-router-dom"
+import { getQuestions } from "../utils/questionsData.js"
 
 export default function SubjectPage() {
-  const { subjectId } = useParams();
-  const navigate = useNavigate();
+  const { subjectId, level: levelFromParams } = useParams()
+  const navigate = useNavigate()
 
-  const { speakText, fontSize, highContrast, theme } = useAccessibility();
-  const { addPoints } = useUser();
+  const level = levelFromParams ? parseInt(levelFromParams) : 1
+
 
   const subjectNames = {
-    etica: "1. Ética y Valores",
+    lenguaje: "Ética y Valores",
     matematicas: "2. Matemáticas",
     ingles: "3. Inglés",
     biologia: "4. Biologia",
     historia: "5. Historia",
     espanol: "6. Español",
-  };
+  }
 
-  const subjectName = subjectNames[subjectId] || "Materia";
-
-  const [questions, setQuestions] = useState([]);
-  const [index, setIndex] = useState(0);
-  const [selected, setSelected] = useState(null);
-  const [checked, setChecked] = useState(false);
+  const subjectName = subjectNames[subjectId] || "Materia"
+  
+  
+  const [questions, setQuestions] = useState([])
+  const [index, setIndex] = useState(0)
+  const [selected, setSelected] = useState(null)
+  const [checked, setChecked] = useState(false)
 
   useEffect(() => {
-    const qs = getQuestions(subjectName, 1);
-    setQuestions(qs);
-    if (qs[0]) speakText(qs[0].question);
-  }, [subjectName, speakText]);
+    const qs = getQuestions(subjectName, level)
+    setQuestions(qs)
+  }, [subjectName, level])
 
-  const current = questions[index];
+  const current = questions[index]
 
-  if (!current) return <p>Cargando...</p>;
+  if (!current) return <p>Cargando...</p>
 
   function handleOptionClick(i) {
-    if (checked) return;
-    setSelected(i);
+    if (checked) return
+    setSelected(i)
   }
 
   function handleCheck() {
-    if (selected === null) return;
+    if (selected === null) return
 
-    const correct = selected === current.correctAnswer;
-    setChecked(true);
-
-    speakText(correct ? "Correcto" : "Incorrecto");
-
-    if (correct) addPoints(10, subjectName);
+    const correct = selected === current.correctAnswer
+    setChecked(true)
   }
 
   function handleNext() {
     if (index + 1 < questions.length) {
-      setIndex(index + 1);
-      setSelected(null);
-      setChecked(false);
-      speakText(questions[index + 1].question);
+      setIndex(index + 1)
+      setSelected(null)
+      setChecked(false)
     } else {
-      navigate("/map");
+      navigate("/main")
     }
   }
 
@@ -68,25 +61,24 @@ export default function SubjectPage() {
     <div className="page-container">
       {/* Encabezado */}
       <div className="header">
-        <button className="back" onClick={() => navigate("/map")}>←</button>
+        <svg className="back" onClick={() => navigate("/main")} xmlns="http://www.w3.org/2000/svg" width="27" height="27" viewBox="0 0 27 27" fill="none">
+        <path d="M12.8672 21.0938L5.27344 13.5L12.8672 5.90625M6.32812 13.5H21.7266" stroke="#56A74F" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+       
         <h2 className="subject-title">{subjectName}</h2>
       </div>
 
       {/* Progreso con hojita SVG */}
-<div className="progress-wrapper">
-  <div className="progress-bar">
-    <div
-      className="progress-fill"
-      style={{ width: `${((index + 1) / questions.length) * 100}%` }}
-    ></div>
-  </div>
+      <div className="progress-wrapper">
+        <div className="progress-bar">
+          <div className="progress-fill" style={{ width: `${((index + 1) / questions.length) * 100}%` }}></div>
+        </div>
 
-  {/* Hojita SVG con el número dentro */}
-  <div className="progress-leaf">
-    {index + 1}/{questions.length}
-  </div>
-</div>
-
+        {/* Hojita SVG con el número dentro */}
+        <div className="progress-leaf">
+          {index + 1}/{questions.length}
+        </div>
+      </div>
 
       {/* Pregunta */}
       <div className="question-section">
@@ -111,18 +103,18 @@ export default function SubjectPage() {
           ))}
         </div>
       </div>
-<div className="footer">
-  {!checked ? (
-    <button className="comprobar-btn" onClick={handleCheck}>
-      Comprobar
-    </button>
-  ) : (
-    <button className="comprobar-btn next" onClick={handleNext}>
-      Siguiente
-    </button>
-  )}
-</div>
 
+      <div className="footer">
+        {!checked ? (
+          <button className="comprobar-btn" onClick={handleCheck}>
+            Comprobar
+          </button>
+        ) : (
+          <button className="comprobar-btn next" onClick={handleNext}>
+            Siguiente
+          </button>
+        )}
+      </div>
 
       <style jsx>{`
         .page-container {
@@ -151,48 +143,47 @@ export default function SubjectPage() {
         }
 
         .subject-title {
-          font-size: 22px;
+          font-size: 24px;
           color: #4caf50;
-          font-weight: bold;
+          font-weight: 700;
+          font-family: 'Quicksand';
         }
 
-        /* ===== HOJITA SVG DEL PROGRESO ===== */
-.progress-wrapper {
-  margin-top: 15px;
-  text-align: center;
-  position: relative;
-}
+        .progress-wrapper {
+          margin-top: 15px;
+          text-align: center;
+          position: relative;
+        }
 
-/* línea verde original */
-.progress-bar {
-  width: 80%;
-  margin: 0 auto;
-  height: 6px;
-  background: #cdecc5;
-  border-radius: 10px;
-  overflow: hidden;
-}
+        .progress-bar {
+          width: 80%;
+          margin: 0 auto;
+          height: 6px;
+          background: #cdecc5;
+          border-radius: 10px;
+          overflow: hidden;
+        }
 
-/* hoja SVG */
-.progress-leaf {
-  width: 64px;
-  height: 23px;
-  margin: 0 auto;
-  margin-top: 10px;
+        .progress-leaf {
+          width: 64px;
+          height: 23px;
+          margin: 0 auto;
+          margin-top: 10px;
 
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='64' height='23' viewBox='0 0 64 23' fill='none'><path d='M0 23C0 10.2975 10.2975 0 23 0H64C64 12.7025 53.7025 23 41 23H0Z' fill='%2356A74F'/></svg>");
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
+          background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='64' height='23' viewBox='0 0 64 23' fill='none'><path d='M0 23C0 10.2975 10.2975 0 23 0H64C64 12.7025 53.7025 23 41 23H0Z' fill='%2356A74F'/></svg>");
+          background-size: contain;
+          background-repeat: no-repeat;
+          background-position: center;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+          display: flex;
+          align-items: center;
+          justify-content: center;
 
-  color: white;
-  font-size: 14px;
-  font-weight: 700;
-}
+          color: white;
+          font-size: 16px;
+          font-weight: 600;
+          font-family: 'Quicksand';
+        }
 
         .progress-fill {
           height: 100%;
@@ -200,35 +191,35 @@ export default function SubjectPage() {
           transition: 0.3s;
         }
 
-        .progress-text {
-          margin-top: 5px;
-          display: block;
-          color: #4caf50;
-          font-weight: bold;
-        }
-
         .question-section {
-          margin-top: 35px;
+          margin-top: 15px;
           text-align: center;
         }
 
         .question-label {
           color: #4caf50;
-          font-size: 18px;
-          margin-bottom: 20px;
+          font-size: 26px;
+          margin-bottom: 10px;
+          font-weight: 700;
+          font-family: 'Quicksand';
         }
 
         .question-text {
-          font-size: 38px;
+          font-size: 50px;
           color: #2e7d32;
           margin-bottom: 15px;
-          font-weight: bold;
+          font-weight: 700;
+          font-family: 'Quicksand';
+           /* o 300px o lo que necesites */
+          word-wrap: break-word;
         }
 
         .select-text {
           margin-top: 10px;
           font-size: 16px;
           color: #2e7d32;
+          font-family: 'Quicksand';
+          font-weight: 700;
         }
 
         .options-grid {
@@ -240,12 +231,14 @@ export default function SubjectPage() {
 
         .option-btn {
           background: #ffffff;
-          border: 2px solid #4caf50;
+          border: 3px solid #4caf50;
           padding: 18px;
           border-radius: 25px;
           font-size: 18px;
           cursor: pointer;
           transition: 0.2s;
+          font-family: 'Mulish';
+          font-weight: 400;
         }
 
         .option-btn.selected {
@@ -262,49 +255,36 @@ export default function SubjectPage() {
           color: white;
         }
 
-        .check-btn,
-        .next-btn {
+        .footer {
+          width: 90%;
+          display: flex;
+          justify-content: center;
           margin-top: auto;
-          background: #4caf50;
-          border: none;
-          color: white;
-          padding: 15px;
-          border-radius: 25px;
-          font-size: 18px;
-          cursor: pointer;
+          margin-bottom: 20px;
+          background: transparent;
+        }
+
+        .comprobar-btn {
           width: 100%;
           max-width: 350px;
-          align-self: center;
-          margin-bottom: 20px;
+          background: #57A863;
+          color: white;
+          border: none;
+          padding: 16px 0;
+          border-radius: 14px;
+          font-size: 17px;
+          font-weight: 600;
+          text-align: center;
+          display: block;
+          cursor: pointer;
+          font-weight: 700;
+          font-family: 'Quicksand';
         }
-.footer {
-  width: 90%;
-  display: flex;
-  justify-content: center;
-  margin-top: auto; /* Empuja el botón hacia abajo */
-  margin-bottom: 20px;
-  background: transparent;
-}
 
-.comprobar-btn {
-  width: 100%;
-  max-width: 350px;
-  background: #57A863;
-  color: white;
-  border: none;
-  padding: 16px 0;
-  border-radius: 14px;
-  font-size: 17px;
-  font-weight: 600;
-  text-align: center;
-  display: block;
-}
-
-
-  .next {
-    background: #57A863;
-  }
+        .next {
+          background: #57A863;
+        }
       `}</style>
     </div>
-  );
+  )
 }
