@@ -11,6 +11,12 @@ import { useNavigate } from "react-router-dom";
 import { useAuthStatus } from '../hooks/useAuthStatus'; 
 import { useChildData } from '../hooks/useChildData';
 import portadalenguaje from '../assets/portada-lenguaje2.png';
+import portadamatematicas from '../assets/portada-matematicas.png'
+import portadavidapractica from '../assets/portada-vidapractica.png'
+import portadanaturales from '../assets/portada-naturales.png'
+import portadaarte from '../assets/portada-arte.png'
+import portadasociales from '../assets/portada-sociales.png'
+import sukiesquina from '../assets/suki-esquina.png'
 
 
 export default function MainDashboard() {
@@ -160,7 +166,8 @@ export default function MainDashboard() {
             </svg>
             </div>
           <div className="raccoon-character">
-              <img src={lado} alt="Mapache Suki" className="raccoon-login" />
+              <img src={sukiesquina} alt="Mapache Suki" style={{width: "100px",
+      height: "auto", marginleft: "10px",} } />
           </div>
         </div>
 
@@ -186,12 +193,10 @@ export default function MainDashboard() {
           </svg>
 
           {/* Math Subject Node - positioned at first right curve apex */}
-          <div className="path-node" style={{top: '100px', right: '0px'}} onClick={() => navigate("/arte")}>
+          <div className="path-node" style={{top: '100px', right: '0px'}} onClick={() => navigate("/arte2")}>
             <div className="subject-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none">
-                <text x="4" y="16" fontSize="14" fontWeight="bold" fill="#4E8F4E">+−</text>
-                <text x="4" y="8" fontSize="14" fontWeight="bold" fill="#4E8F4E">×÷</text>
-              </svg>
+                <img src={portadaarte} style={{width: "100px",
+      height: "auto",}}></img>
             </div>
             <div className="subject-title">Arte</div>
           </div>
@@ -341,7 +346,7 @@ export default function MainDashboard() {
 
 
           {/* Cube Subject Node - positioned at left curve apex */}
-          <div className="path-node" style={{top: '290px', left: '0px'}} onClick={() => handleSubjectClick('lenguaje', 'Lenguaje')}>
+          <div className="path-node" style={{top: '290px', left: '0px'}} onClick={() => navigate("/lenguaje")}>
             <div className="subject-icon">
                 <img src={portadalenguaje} style={{width: "100px",
       height: "auto",}}></img>
@@ -488,12 +493,10 @@ export default function MainDashboard() {
 
 
           {/* Tree Subject Node - positioned at right curve apex */}
-          <div className="path-node" style={{top: '510px', right: '0px'}}>
+          <div className="path-node" style={{top: '510px', right: '0px'}} onClick={() => navigate("/naturales")}>
             <div className="subject-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="#4E8F4E">
-                <circle cx="12" cy="8" r="6"/>
-                <rect x="10" y="14" width="4" height="8" fill="#8B4513"/>
-              </svg>
+                <img src={portadanaturales} style={{width: "100px",
+      height: "auto",}}></img>
             </div>
              <div className="subject-title">Naturales</div>
           </div>
@@ -532,11 +535,10 @@ export default function MainDashboard() {
 
 
           {/* Book Subject Node - positioned at left curve apex */}
-          <div className="path-node" style={{top: '700px', left: '0px'}}>
+          <div className="path-node" style={{top: '700px', left: '0px'}} onClick={() => navigate("/sociales")}>
             <div className="subject-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="#9B59B6">
-                <path d="M4 19.5A2.5 2.5 0 016.5 17H20v-2H6.5A2.5 2.5 0 004 17.5V19.5zM6.5 3A2.5 2.5 0 004 5.5v10A2.5 2.5 0 006.5 13H20V3H6.5z"/>
-              </svg>
+                <img src={portadasociales} style={{width: "100px",
+      height: "auto",}}></img>
             </div>
              <div className="subject-title">Sociales</div>
           </div>
@@ -576,11 +578,10 @@ export default function MainDashboard() {
 
 
           {/* Flag Subject Node - positioned at right curve apex */}
-          <div className="path-node" style={{top: '900px', right: '0px'}}>
+          <div className="path-node" style={{top: '900px', right: '0px'}} onClick={() => navigate("/matematicas")}>
             <div className="subject-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#FFD700" strokeWidth="2">
-                <path d="M5 3v18M5 5h12l-2 4 2 4H5"/>
-              </svg>
+                <img src={portadamatematicas} style={{width: "100px",
+      height: "auto",}}></img>
             </div>
              <div className="subject-title">Matematicas</div>
           </div>
@@ -607,15 +608,10 @@ export default function MainDashboard() {
 
 
           {/* Bunny Subject Node - positioned at bottom left */}
-          <div className="path-node" style={{top: '1100px', left: '0px'}}>
+          <div className="path-node" style={{top: '1100px', left: '0px'}} onClick={() => navigate("/vidapractica")}>
             <div className="subject-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="#E91E63">
-                <ellipse cx="8" cy="6" rx="2" ry="5"/>
-                <ellipse cx="16" cy="6" rx="2" ry="5"/>
-                <circle cx="12" cy="14" r="6"/>
-                <circle cx="10" cy="13" r="1" fill="white"/>
-                <circle cx="14" cy="13" r="1" fill="white"/>
-              </svg>
+                <img src={portadavidapractica} style={{width: "100px",
+      height: "auto",}}></img>
             </div>
              <div className="subject-title">Vida Practica</div>
           </div>

@@ -31,9 +31,8 @@ export default function CompletadoPage() {
       />
 
       <div className="score-summary">
-                <p>Acertaste **{correctCount}** de **{totalQuestions}** preguntas.</p>
-                <p>Tu puntaje es: **{percentage}%**</p>
-                <p className="xp-gained-text">🎉 ¡Ganaste **{xpGained} XP**!</p>
+
+                <p className="xp-gained-text">¡Ganaste {xpGained} XP!</p>
         </div>
 
       <button className="comprobar-btn" onClick={() => navigate("/main")}>
@@ -90,17 +89,19 @@ export default function CompletadoPage() {
         }
 
         .comprobar-btn {
-          width: 100%;
-          background: #4FAE4C;
+          position: fixed;
+          margin-bottom: 25px;
+          bottom: 0;
+          left: 25px;
+          right: 25px;
+          width: auto;
+          background: #56a74f;
           color: white;
-          border: none;
-          margin-top: 100px;
-          padding: 16px 0;
-          border-radius: 14px;
+          padding: 15px;
+          border-radius: 12px;
           font-size: 18px;
+          font-family: Quicksand;
           font-weight: 700;
-          font-family: 'Quicksand';
-          margin-bottom: 20px;
         }
       `}</style>
 
