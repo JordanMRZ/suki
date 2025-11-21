@@ -1,13 +1,18 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import { useParams, useNavigate } from "react-router-dom"
 import { getQuestions } from "../utils/questionsData.js"
+import { useChildData } from "../hooks/useChildData.js"
+
+// Define la recompensa de XP fija al finalizar la lección
+const FIXED_XP_REWARD = 10; 
 
 export default function SubjectPage() {
   const { subjectId, level: levelFromParams } = useParams()
   const navigate = useNavigate()
 
-  const level = levelFromParams ? parseInt(levelFromParams) : 1
+  const { updatePlayerXP, updateMissionProgress } = useChildData()
 
+  const level = levelFromParams ? parseInt(levelFromParams) : 1
 
   const subjectNames = {
     lenguaje: "Ética y Valores",
@@ -19,21 +24,25 @@ export default function SubjectPage() {
   }
 
   const subjectName = subjectNames[subjectId] || "Materia"
-  
-  
-  const [questions, setQuestions] = useState([])
+   
+  // --- Estados de la Lección ---
+  const [questions, setQuestions] = useState([]) 
+  const [incorrectQuestions, setIncorrectQuestions] = useState([]) 
   const [index, setIndex] = useState(0)
   const [selected, setSelected] = useState(null)
   const [checked, setChecked] = useState(false)
+  const [score, setScore] = useState(0)
+  const [isReviewMode, setIsReviewMode] = useState(false); 
+  
+  // Guardamos el total original de preguntas para mostrarlo al final correctamente
+  const [originalTotalQuestions, setOriginalTotalQuestions] = useState(0);
 
+  // Carga inicial de preguntas
   useEffect(() => {
     const qs = getQuestions(subjectName, level)
     setQuestions(qs)
+    setOriginalTotalQuestions(qs.length); // Guardamos cuántas eran al principio
   }, [subjectName, level])
-
-  const current = questions[index]
-
-  if (!current) return <p>Cargando...</p>
 
   function handleOptionClick(i) {
     if (checked) return
@@ -42,30 +51,113 @@ export default function SubjectPage() {
 
   function handleCheck() {
     if (selected === null) return
-
-    const correct = selected === current.correctAnswer
     setChecked(true)
   }
+   
+  const finishLesson = useCallback(async (finalScore, totalQs) => {
+    const xpGained = FIXED_XP_REWARD; 
+
+    const updatePromises = [];
+    
+    updatePromises.push(updatePlayerXP(xpGained));
+    updatePromises.push(updateMissionProgress(1, finalScore)); 
+
+    try {
+        await Promise.all(updatePromises);
+        
+        navigate("/completado", { 
+            state: { 
+                correctCount: finalScore, 
+                totalQuestions: totalQs,
+                xpGained: xpGained 
+            } 
+        });
+    } catch (error) {
+        console.error("Error al finalizar lección y actualizar datos:", error);
+    }
+  }, [navigate, updatePlayerXP, updateMissionProgress]);
+
+  const current = questions[index]
+  // Usamos questions.length para la barra de progreso actual, pero originalTotalQuestions para el final
+  const currentTotalQuestions = questions.length 
+
+  if (!current) return <p>Cargando...</p>
+
 
   function handleNext() {
+    let isCorrect = selected === current.correctAnswer;
+    
+    let nextScore = score;
+    let newIncorrectQuestions = [...incorrectQuestions];
+
+    // 1. Verificar respuesta
+    if (checked) {
+      if (isCorrect) {
+        nextScore = score + 1; 
+      } else {
+        // CAMBIO CLAVE:
+        // Siempre agregamos a incorrectas si falló, sin importar si es modo repaso o no.
+        // Esto asegura que si falla la corrección, se la vuelva a preguntar.
+        newIncorrectQuestions.push(current);
+      }
+    }
+
+    // 2. Avanzar a la siguiente pregunta del lote actual
     if (index + 1 < questions.length) {
-      setIndex(index + 1)
-      setSelected(null)
-      setChecked(false)
+      setScore(nextScore);
+      setIncorrectQuestions(newIncorrectQuestions);
+      setIndex(index + 1);
+      setSelected(null);
+      setChecked(false);
     } else {
-      navigate("/main")
+      // 3. FIN DEL CICLO ACTUAL
+
+      if (newIncorrectQuestions.length > 0) {
+        // AÚN HAY ERRORES (O NUEVOS ERRORES EN LA CORRECCIÓN)
+        
+        // Preparamos el siguiente ciclo solo con las fallidas
+        setQuestions(newIncorrectQuestions); 
+        setIncorrectQuestions([]); // Limpiamos el acumulador para el nuevo ciclo
+        
+        setIndex(0); 
+        setScore(0); // Reiniciamos score visual (opcional)
+        setSelected(null);
+        setChecked(false);
+        
+        // Activamos modo corrección (si no estaba ya activo)
+        if (!isReviewMode) setIsReviewMode(true);
+        
+        console.log(`Fallo ${newIncorrectQuestions.length} preguntas. Reiniciando ciclo de corrección.`);
+        
+      } else {
+        // CERO ERRORES PENDIENTES. ¡TERMINADO!
+        
+        // Si llegamos aquí, el usuario eventualmente corrigió todo.
+        // El puntaje final visualmente será el total original (100%).
+        const finalCorrectCount = originalTotalQuestions; 
+        
+        finishLesson(finalCorrectCount, originalTotalQuestions); 
+      }
     }
   }
+
+  const titleText = isReviewMode 
+    ? "¡Vamos a Corregir! 🧠" 
+    : subjectName;
+    
+  const questionLabelText = isReviewMode 
+    ? `Repaso (${index + 1} de ${questions.length})` 
+    : `Pregunta ${index + 1}`;
 
   return (
     <div className="page-container">
       {/* Encabezado */}
       <div className="header">
         <svg className="back" onClick={() => navigate("/main")} xmlns="http://www.w3.org/2000/svg" width="27" height="27" viewBox="0 0 27 27" fill="none">
-        <path d="M12.8672 21.0938L5.27344 13.5L12.8672 5.90625M6.32812 13.5H21.7266" stroke="#56A74F" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M12.8672 21.0938L5.27344 13.5L12.8672 5.90625M6.32812 13.5H21.7266" stroke="#56A74F" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
         </svg>
-       
-        <h2 className="subject-title">{subjectName}</h2>
+        
+        <h2 className="subject-title">{titleText}</h2>
       </div>
 
       {/* Progreso con hojita SVG */}
@@ -82,7 +174,7 @@ export default function SubjectPage() {
 
       {/* Pregunta */}
       <div className="question-section">
-        <h3 className="question-label">Pregunta {index + 1}</h3>
+        <h3 className="question-label">{questionLabelText}</h3>
         <h1 className="question-text">{current.question}</h1>
         <p className="select-text">Selecciona el resultado correcto:</p>
 
@@ -111,18 +203,24 @@ export default function SubjectPage() {
           </button>
         ) : (
           <button className="comprobar-btn next" onClick={handleNext}>
-            Siguiente
+            {index + 1 < questions.length 
+                ? "Siguiente Pregunta" 
+                : (incorrectQuestions.length > 0 || (selected !== current.correctAnswer)) 
+                    ? "Corregir Errores" // Si hay errores acumulados o la actual está mala
+                    : "Finalizar Lección" // Si todo está perfecto
+            }
           </button>
         )}
       </div>
 
+      {/* Estilos JSX */}
       <style jsx>{`
         .page-container {
           background: #f2ffe9;
-          min-height: 100vh;
           padding: 25px;
           display: flex;
           flex-direction: column;
+          min-height: 100vh; 
         }
 
         .header {
@@ -194,6 +292,7 @@ export default function SubjectPage() {
         .question-section {
           margin-top: 15px;
           text-align: center;
+          flex-grow: 1; 
         }
 
         .question-label {
@@ -210,7 +309,6 @@ export default function SubjectPage() {
           margin-bottom: 15px;
           font-weight: 700;
           font-family: 'Quicksand';
-           /* o 300px o lo que necesites */
           word-wrap: break-word;
         }
 
@@ -256,7 +354,7 @@ export default function SubjectPage() {
         }
 
         .footer {
-          width: 90%;
+          width: 100%;
           display: flex;
           justify-content: center;
           margin-top: auto;
@@ -266,7 +364,7 @@ export default function SubjectPage() {
 
         .comprobar-btn {
           width: 100%;
-          max-width: 350px;
+          margin-top: 20px;
           background: #57A863;
           color: white;
           border: none;
