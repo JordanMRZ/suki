@@ -19,6 +19,13 @@ import PccuentaPage from './pages/PanelControlCuenta';
 import CompletadoPage from './pages/CompletadoPage';
 import ArtePage from './pages/ArtePage';
 import ErrorPage from './pages/ErrorPage';
+import MatematicasPage from './pages/MatematicasPage';
+import Arte2Page from './pages/Arte2Page';
+import LenguajePage from './pages/LenguajePage';
+import NaturalesPage from './pages/NaturalesPage';
+import SocialesPage from './pages/SocialesPage';
+import VidapracticaPage from './pages/VidapracticaPage'
+import PricingPage from './pages/PricingPage'
 import './App.css';
 
 function App() {
@@ -88,6 +95,14 @@ function App() {
                 <Route path="/completado" element={<CompletadoPage />} />
                 <Route path="/arte" element={<ArtePage />} />
                 <Route path="*" element={<ErrorPage />} />
+                <Route path="/matematicas" element={<MatematicasPage />} />
+                <Route path="/arte2" element={<Arte2Page />} />
+                <Route path="/lenguaje" element={<LenguajePage />} />
+                <Route path="/naturales" element={<NaturalesPage />} />
+                <Route path="/sociales" element={<SocialesPage />} />
+                <Route path="/vidapractica" element={<VidapracticaPage />} />
+                <Route path="/pricing" element={<PricingPage />} />
+
               {/* Rutas adicionales se agregarán más adelante */}
             </Routes>
           </div>
